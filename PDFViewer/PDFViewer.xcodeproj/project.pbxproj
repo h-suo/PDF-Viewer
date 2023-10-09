@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		4513EDB42AD3C52100939A6E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4513EDB32AD3C52100939A6E /* AppDelegate.swift */; };
 		4513EDB62AD3C52100939A6E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4513EDB52AD3C52100939A6E /* SceneDelegate.swift */; };
-		4513EDB82AD3C52100939A6E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4513EDB72AD3C52100939A6E /* ViewController.swift */; };
+		4513EDB82AD3C52100939A6E /* PDFListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4513EDB72AD3C52100939A6E /* PDFListViewController.swift */; };
 		4513EDBD2AD3C52200939A6E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4513EDBC2AD3C52200939A6E /* Assets.xcassets */; };
 		4513EDC02AD3C52200939A6E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4513EDBE2AD3C52200939A6E /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
@@ -18,7 +18,7 @@
 		4513EDB02AD3C52100939A6E /* PDFViewer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PDFViewer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4513EDB32AD3C52100939A6E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4513EDB52AD3C52100939A6E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		4513EDB72AD3C52100939A6E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		4513EDB72AD3C52100939A6E /* PDFListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFListViewController.swift; sourceTree = "<group>"; };
 		4513EDBC2AD3C52200939A6E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4513EDBF2AD3C52200939A6E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4513EDC12AD3C52200939A6E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -75,7 +75,7 @@
 		4513EDCA2AD3D97700939A6E /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
-				4513EDB72AD3C52100939A6E /* ViewController.swift */,
+				4513EDCC2AD3DAF300939A6E /* PDFList */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -88,6 +88,14 @@
 				4513EDC12AD3C52200939A6E /* Info.plist */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		4513EDCC2AD3DAF300939A6E /* PDFList */ = {
+			isa = PBXGroup;
+			children = (
+				4513EDB72AD3C52100939A6E /* PDFListViewController.swift */,
+			);
+			path = PDFList;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -183,7 +191,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4513EDB82AD3C52100939A6E /* ViewController.swift in Sources */,
+				4513EDB82AD3C52100939A6E /* PDFListViewController.swift in Sources */,
 				4513EDB42AD3C52100939A6E /* AppDelegate.swift in Sources */,
 				4513EDB62AD3C52100939A6E /* SceneDelegate.swift in Sources */,
 			);

@@ -17,7 +17,7 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
         
         let navigationController = UINavigationController()
-        navigationController.setViewControllers([ViewController()], animated: true)
+        navigationController.setViewControllers([PDFListViewController()], animated: true)
 
         window = UIWindow(windowScene: windowScene)
         window?.rootViewController = navigationController
