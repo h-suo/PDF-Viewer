@@ -3,5 +3,5 @@ disabled_rules:
 - trailing_whitespace
 
 excluded:
-- PDFViewer/AppDelegate.swift
-- PDFViewer/SceneDelegate.swift
+- PDFViewer/Application/AppDelegate.swift
+- PDFViewer/Application/SceneDelegate.swift
