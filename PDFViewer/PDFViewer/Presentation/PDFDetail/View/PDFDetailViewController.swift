@@ -13,8 +13,9 @@ final class PDFDetailViewController: UIViewController {
     // MARK: - Private Property
     private var pdfView: PDFView = {
         let pdfView = PDFView()
+        pdfView.translatesAutoresizingMaskIntoConstraints = false
         pdfView.autoScales = true
-        pdfView.displayMode = .singlePageContinuous
+        pdfView.displayMode = .singlePage
         pdfView.displayDirection = .vertical
         
         return pdfView
