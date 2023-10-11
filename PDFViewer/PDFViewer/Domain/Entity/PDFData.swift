@@ -8,7 +8,7 @@
 import Foundation
 
 struct PDFData: Hashable {
-    let id: UUID
+    let id: UUID = UUID()
     var title: String
     var url: URL
 }
