@@ -33,9 +33,24 @@ final class PDFViewerCoordinator {
     
     private func makePDFListViewModel() -> PDFListViewModel {
         let pdfListViewModelAction = PDFListViewModelAction(showAddAlert: showAddAlert,
-                                                            showFailAlert: showFailAlert)
+                                                            showFailAlert: showFailAlert,
+                                                            showPDFDetailView: showPDFDetailView)
         
         return DefaultPDFListViewModel(useCase: pdfViewerUseCase, actions: pdfListViewModelAction)
+    }
+    
+    private func makePDFDetailViewController(pdfData: PDFData) -> PDFDetailViewController {
+        let pdfDetailViewModel = makePDFDetailViewModel(pdfData: pdfData)
+        let pdfDetailViewController = PDFDetailViewController(viewModel: pdfDetailViewModel)
+        
+        return pdfDetailViewController
+    }
+    
+    private func makePDFDetailViewModel(pdfData: PDFData) -> PDFDetailViewModel {
+        let pdfDetailViewModel = DefaultPDFDetailViewModel(useCase: pdfViewerUseCase,
+                                                                pdfData: pdfData)
+        
+        return pdfDetailViewModel
     }
     
     // MARK: - Actions
@@ -47,5 +62,11 @@ final class PDFViewerCoordinator {
         let failAlert = UIAlertController.makeFailAlert(message: message)
         
         presenter.present(failAlert, animated: true)
+    }
+    
+    private func showPDFDetailView(pdfData: PDFData) {
+        let pdfDetailViewController = makePDFDetailViewController(pdfData: pdfData)
+        
+        presenter.pushViewController(pdfDetailViewController, animated: true)
     }
 }

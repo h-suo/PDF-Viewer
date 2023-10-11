@@ -20,6 +20,7 @@
 		4582B8A32AD639A200AF5EF4 /* PDFViewerCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4582B8A22AD639A200AF5EF4 /* PDFViewerCoordinator.swift */; };
 		4582B8A62AD66D0A00AF5EF4 /* PDFDataError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4582B8A52AD66D0A00AF5EF4 /* PDFDataError.swift */; };
 		4582B8AA2AD688A400AF5EF4 /* UIAlertController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4582B8A92AD688A400AF5EF4 /* UIAlertController+.swift */; };
+		4582B8AC2AD68F5300AF5EF4 /* PDFDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4582B8AB2AD68F5300AF5EF4 /* PDFDetailViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,6 +40,7 @@
 		4582B8A22AD639A200AF5EF4 /* PDFViewerCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFViewerCoordinator.swift; sourceTree = "<group>"; };
 		4582B8A52AD66D0A00AF5EF4 /* PDFDataError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFDataError.swift; sourceTree = "<group>"; };
 		4582B8A92AD688A400AF5EF4 /* UIAlertController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+.swift"; sourceTree = "<group>"; };
+		4582B8AB2AD68F5300AF5EF4 /* PDFDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFDetailViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -182,6 +184,7 @@
 		4582B89E2AD5706C00AF5EF4 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				4582B8AB2AD68F5300AF5EF4 /* PDFDetailViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -315,6 +318,7 @@
 				4582B8A62AD66D0A00AF5EF4 /* PDFDataError.swift in Sources */,
 				4582B8A32AD639A200AF5EF4 /* PDFViewerCoordinator.swift in Sources */,
 				4582B8952AD53A6400AF5EF4 /* PDFDetailViewController.swift in Sources */,
+				4582B8AC2AD68F5300AF5EF4 /* PDFDetailViewModel.swift in Sources */,
 				4582B8AA2AD688A400AF5EF4 /* UIAlertController+.swift in Sources */,
 				4513EDB82AD3C52100939A6E /* PDFListViewController.swift in Sources */,
 				4582B8A02AD5707C00AF5EF4 /* PDFListViewModel.swift in Sources */,

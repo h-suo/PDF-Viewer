@@ -11,6 +11,7 @@ import Combine
 struct PDFListViewModelAction {
     let showAddAlert: (UIAlertController) -> Void
     let showFailAlert: (String) -> Void
+    let showPDFDetailView: (PDFData) -> Void
 }
 
 protocol PDFListViewModelInput {
@@ -105,6 +106,6 @@ extension DefaultPDFListViewModel {
     }
     
     func selectItem(at index: Int) {
-        
+        actions.showPDFDetailView(pdfDatas[index])
     }
 }

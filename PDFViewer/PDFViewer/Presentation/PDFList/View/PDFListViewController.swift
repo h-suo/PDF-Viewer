@@ -68,6 +68,7 @@ extension PDFListViewController {
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: makeCollectionViewLayout())
         collectionView?.translatesAutoresizingMaskIntoConstraints = false
         collectionView?.register(PDFListCell.self, forCellWithReuseIdentifier: PDFListCell.identifier)
+        collectionView?.delegate = self
     }
 }
 
@@ -95,6 +96,13 @@ extension PDFListViewController {
         snapShot.appendItems(pdfDatas)
         
         self.dataSource?.apply(snapShot)
+    }
+}
+
+// MARK: - CollectionView Delegate
+extension PDFListViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        viewModel.selectItem(at: indexPath.row)
     }
 }
 
