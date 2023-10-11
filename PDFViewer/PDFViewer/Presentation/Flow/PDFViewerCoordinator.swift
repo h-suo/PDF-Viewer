@@ -44,10 +44,8 @@ final class PDFViewerCoordinator {
     }
     
     private func showFailAlert(message: String) {
-        let alert = UIAlertController(title: "Failure", message: message, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "Yes", style: .cancel)
-        alert.addAction(okAction)
+        let failAlert = UIAlertController.makeFailAlert(message: message)
         
-        presenter.present(alert, animated: true)
+        presenter.present(failAlert, animated: true)
     }
 }
