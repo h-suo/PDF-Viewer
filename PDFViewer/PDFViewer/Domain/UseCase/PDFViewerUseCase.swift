@@ -11,6 +11,7 @@ protocol PDFViewerUseCase {
     var pdfDatasPublisher: Published<[PDFData]>.Publisher { get }
     
     func storePDFData(title: String, url: URL) async throws
+    func convertPDFDocument(url: URL) async -> PDFDocument?
 }
 
 final class DefaultPDFViewerUseCase: PDFViewerUseCase {
@@ -28,5 +29,9 @@ final class DefaultPDFViewerUseCase: PDFViewerUseCase {
         let pdfData = PDFData(title: title, url: url)
         
         pdfDatas.append(pdfData)
+    }
+    
+    func convertPDFDocument(url: URL) async -> PDFDocument? {
+        return PDFDocument(url: url)
     }
 }
