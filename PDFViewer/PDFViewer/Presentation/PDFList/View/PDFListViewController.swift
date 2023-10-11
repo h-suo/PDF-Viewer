@@ -79,14 +79,12 @@ extension PDFListViewController {
             return
         }
         
-        dataSource = UICollectionViewDiffableDataSource<Section, PDFData>(collectionView: collectionView, cellProvider: { collectionView, indexPath, item in
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PDFListCell.identifier, for: indexPath) as? PDFListCell else {
-                return UICollectionViewListCell()
-            }
-            
+        let cellResgistration = UICollectionView.CellRegistration<PDFListCell, PDFData> { cell, _, item in
             cell.configureCell(title: item.title, url: item.url.absoluteString)
-            
-            return cell
+        }
+        
+        dataSource = UICollectionViewDiffableDataSource<Section, PDFData>(collectionView: collectionView, cellProvider: { collectionView, indexPath, item in
+            return collectionView.dequeueConfiguredReusableCell(using: cellResgistration, for: indexPath, item: item)
         })
     }
     
@@ -103,6 +101,8 @@ extension PDFListViewController {
 extension PDFListViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         viewModel.selectItem(at: indexPath.row)
+        
+        collectionView.deselectItem(at: indexPath, animated: true)
     }
 }
 
