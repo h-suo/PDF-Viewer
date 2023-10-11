@@ -6,18 +6,52 @@
 //
 
 import UIKit
+import Combine
 
 final class PDFListViewController: UIViewController {
     
     // MARK: - Private Property
     private var collectionView: UICollectionView?
+    private var dataSource: UICollectionViewDiffableDataSource<Section, PDFData>?
+    
+    private var cancelables: [AnyCancellable] = []
+    private let viewModel: PDFListViewModel
+    
+    init(viewModel: PDFListViewModel) {
+        self.viewModel = viewModel
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     // MARK: - View Event
     override func viewDidLoad() {
         super.viewDidLoad()
         
         configureCollectionView()
+        configureDataSource()
         configureUI()
+        setupBindings()
+    }
+    
+    @objc private func tapAddButton() {
+        viewModel.tapAddButton()
+    }
+}
+
+// MARK: - Data Binding
+extension PDFListViewController {
+    private func setupBindings() {
+        viewModel.pdfDatasPublisher.sink { [weak self] pdfDatas in
+            guard let self else {
+                return
+            }
+            
+            self.loadCollectionView(pdfDatas)
+        }.store(in: &cancelables)
     }
 }
 
@@ -33,6 +67,34 @@ extension PDFListViewController {
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: makeCollectionViewLayout())
         collectionView?.translatesAutoresizingMaskIntoConstraints = false
         collectionView?.backgroundColor = .systemFill
+        collectionView?.register(PDFListCell.self, forCellWithReuseIdentifier: PDFListCell.identifier)
+    }
+}
+
+// MARK: - CollectionView DataSource
+extension PDFListViewController {
+    private func configureDataSource() {
+        guard let collectionView else {
+            return
+        }
+        
+        dataSource = UICollectionViewDiffableDataSource<Section, PDFData>(collectionView: collectionView, cellProvider: { collectionView, indexPath, item in
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PDFListCell.identifier, for: indexPath) as? PDFListCell else {
+                return UICollectionViewListCell()
+            }
+            
+            cell.configureCell(title: item.title, url: item.url.absoluteString)
+            
+            return cell
+        })
+    }
+    
+    private func loadCollectionView(_ pdfDatas: [PDFData]) {
+        var snapShot = NSDiffableDataSourceSnapshot<Section, PDFData>()
+        snapShot.appendSections([.main])
+        snapShot.appendItems(pdfDatas)
+        
+        self.dataSource?.apply(snapShot)
     }
 }
 
@@ -45,7 +107,7 @@ extension PDFListViewController {
     }
     
     private func configureNavigation() {
-        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: nil)
+        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(tapAddButton))
         
         navigationItem.title = "PDF Viewer"
         navigationItem.rightBarButtonItem = addButton
