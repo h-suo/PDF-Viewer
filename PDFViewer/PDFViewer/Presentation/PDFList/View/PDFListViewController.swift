@@ -14,9 +14,10 @@ final class PDFListViewController: UIViewController {
     private var collectionView: UICollectionView?
     private var dataSource: UICollectionViewDiffableDataSource<Section, PDFData>?
     
-    private var cancelables: [AnyCancellable] = []
+    private var cancellables: [AnyCancellable] = []
     private let viewModel: PDFListViewModel
     
+    // MARK: - Life Cycle
     init(viewModel: PDFListViewModel) {
         self.viewModel = viewModel
         
@@ -51,7 +52,7 @@ extension PDFListViewController {
             }
             
             self.loadCollectionView(pdfDatas)
-        }.store(in: &cancelables)
+        }.store(in: &cancellables)
     }
 }
 

@@ -31,7 +31,7 @@ final class DefaultPDFListViewModel: PDFListViewModel {
     // MARK: - Private Property
     private let useCase: PDFViewerUseCase
     private let actions: PDFListViewModelAction
-    private var cancelables: [AnyCancellable] = []
+    private var cancellables: [AnyCancellable] = []
     @Published private var pdfDatas: [PDFData] = []
     
     // MARK: - Life Cycle
@@ -53,7 +53,7 @@ extension DefaultPDFListViewModel {
     private func setupBindings() {
         useCase.pdfDatasPublisher.sink { pdfDatas in
             self.pdfDatas = pdfDatas
-        }.store(in: &cancelables)
+        }.store(in: &cancellables)
     }
 }
 
