@@ -66,7 +66,6 @@ extension PDFListViewController {
     private func configureCollectionView() {
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: makeCollectionViewLayout())
         collectionView?.translatesAutoresizingMaskIntoConstraints = false
-        collectionView?.backgroundColor = .systemFill
         collectionView?.register(PDFListCell.self, forCellWithReuseIdentifier: PDFListCell.identifier)
     }
 }

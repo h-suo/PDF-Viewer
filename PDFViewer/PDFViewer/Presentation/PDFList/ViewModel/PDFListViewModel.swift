@@ -10,6 +10,7 @@ import Combine
 
 struct PDFListViewModelAction {
     let showAddAlert: (UIAlertController) -> Void
+    let showFailAlert: (String) -> Void
 }
 
 protocol PDFListViewModelInput {
@@ -75,10 +76,21 @@ extension DefaultPDFListViewModel {
                   let title = alert.textFields?[0].text,
                   let urlString = alert.textFields?[1].text,
                   let url = URL(string: urlString) else {
+                self?.actions.showFailAlert("Please enter Title and URL.")
                 return
             }
             
-            useCase.storePDFData(title: title, url: url)
+            if title == "" || urlString == "" {
+                
+            }
+            
+            Task {
+                do {
+                    try await self.useCase.storePDFData(title: title, url: url)
+                } catch {
+                    self.actions.showFailAlert(error.localizedDescription)
+                }
+            }
         }
         
         [cancelAction, addAction].forEach {

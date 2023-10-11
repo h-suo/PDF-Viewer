@@ -32,13 +32,22 @@ final class PDFViewerCoordinator {
     }
     
     private func makePDFListViewModel() -> PDFListViewModel {
-        let pdfListViewModelAction = PDFListViewModelAction(showAddAlert: showAddAlert)
+        let pdfListViewModelAction = PDFListViewModelAction(showAddAlert: showAddAlert,
+                                                            showFailAlert: showFailAlert)
         
         return DefaultPDFListViewModel(useCase: pdfViewerUseCase, actions: pdfListViewModelAction)
     }
     
     // MARK: - Actions
     private func showAddAlert(alert: UIAlertController) {
+        presenter.present(alert, animated: true)
+    }
+    
+    private func showFailAlert(message: String) {
+        let alert = UIAlertController(title: "Failure", message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "Yes", style: .cancel)
+        alert.addAction(okAction)
+        
         presenter.present(alert, animated: true)
     }
 }

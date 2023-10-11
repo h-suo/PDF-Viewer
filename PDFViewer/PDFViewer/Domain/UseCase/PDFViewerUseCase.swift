@@ -10,7 +10,7 @@ import PDFKit
 protocol PDFViewerUseCase {
     var pdfDatasPublisher: Published<[PDFData]>.Publisher { get }
     
-    func storePDFData(title: String, url: URL)
+    func storePDFData(title: String, url: URL) async throws
 }
 
 final class DefaultPDFViewerUseCase: PDFViewerUseCase {
@@ -20,8 +20,13 @@ final class DefaultPDFViewerUseCase: PDFViewerUseCase {
     
     var pdfDatasPublisher: Published<[PDFData]>.Publisher { $pdfDatas }
     
-    func storePDFData(title: String, url: URL) {
+    func storePDFData(title: String, url: URL) async throws {
+        guard PDFDocument(url: url) != nil else {
+            throw PDFDataError.invalidURL
+        }
+        
         let pdfData = PDFData(title: title, url: url)
+        
         pdfDatas.append(pdfData)
     }
 }
