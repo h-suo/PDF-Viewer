@@ -9,6 +9,8 @@ import PDFKit
 
 protocol PDFDetailViewModelInput {
     func viewDidLoad()
+    func tapNextButton(_ pdfView: PDFView)
+    func tapBackButton(_ pdfView: PDFView)
 }
 
 protocol PDFDetailViewModelOutput {
@@ -49,5 +51,14 @@ extension DefaultPDFDetailViewModel {
 
 // MARK: - INPUT View event methods
 extension DefaultPDFDetailViewModel {
-    func viewDidLoad() { }
+    func viewDidLoad() {
+    }
+    
+    func tapNextButton(_ pdfView: PDFView) {
+        pdfView.goToNextPage(nil)
+    }
+    
+    func tapBackButton(_ pdfView: PDFView) {
+        pdfView.goToPreviousPage(nil)
+    }
 }

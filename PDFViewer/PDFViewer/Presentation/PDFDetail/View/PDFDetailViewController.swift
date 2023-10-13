@@ -16,7 +16,7 @@ final class PDFDetailViewController: UIViewController {
         let pdfView = PDFView()
         pdfView.translatesAutoresizingMaskIntoConstraints = false
         pdfView.autoScales = true
-        pdfView.displayMode = .singlePageContinuous
+        pdfView.displayMode = .singlePage
         pdfView.displayDirection = .vertical
         
         return pdfView
@@ -42,6 +42,21 @@ final class PDFDetailViewController: UIViewController {
         
         configureUI()
         setupBindings()
+        viewModel.viewDidLoad()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        navigationController?.isToolbarHidden = true
+    }
+    
+    @objc func tapNextButton() {
+        viewModel.tapNextButton(pdfView)
+    }
+    
+    @objc func tapBackButton() {
+        viewModel.tapBackButton(pdfView)
     }
 }
 
@@ -71,12 +86,22 @@ extension PDFDetailViewController {
 extension PDFDetailViewController {
     private func configureUI() {
         configureNavigation()
+        configureToolBar()
         configureView()
         configureLayout()
     }
     
     private func configureNavigation() {
         navigationItem.title = "PDF Detail"
+    }
+    
+    private func configureToolBar() {
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let nextButton = UIBarButtonItem(image: UIImage(systemName: "chevron.right"), style: .plain, target: self, action: #selector(tapNextButton))
+        let backButton = UIBarButtonItem(image: UIImage(systemName: "chevron.left"), style: .plain, target: self, action: #selector(tapBackButton))
+        
+        navigationController?.isToolbarHidden = false
+        toolbarItems = [backButton, flexibleSpace, nextButton]
     }
     
     private func configureView() {
