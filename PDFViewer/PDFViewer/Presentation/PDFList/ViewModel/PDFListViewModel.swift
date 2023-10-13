@@ -89,7 +89,9 @@ extension DefaultPDFListViewModel {
                 do {
                     try await self.useCase.storePDFData(title: title, url: url)
                 } catch {
-                    self.actions.showFailAlert(error.localizedDescription)
+                    DispatchQueue.main.async {
+                        self.actions.showFailAlert(error.localizedDescription)
+                    }
                 }
             }
         }
