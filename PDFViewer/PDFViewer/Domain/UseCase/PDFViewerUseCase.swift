@@ -12,6 +12,8 @@ protocol PDFViewerUseCase {
     
     func storePDFData(title: String, url: URL) async throws
     func convertPDFDocument(url: URL) async -> PDFDocument?
+    func addBookmarkPDF(to pdfData: PDFData, with index: Int)
+    func deleteBookmarkPDF(to pdfData: PDFData, with index: Int)
 }
 
 final class DefaultPDFViewerUseCase: PDFViewerUseCase {
@@ -33,5 +35,23 @@ final class DefaultPDFViewerUseCase: PDFViewerUseCase {
     
     func convertPDFDocument(url: URL) async -> PDFDocument? {
         return PDFDocument(url: url)
+    }
+    
+    func addBookmarkPDF(to pdfData: PDFData, with index: Int) {
+        if let dataIndex = pdfDatas.firstIndex(of: pdfData) {
+            var pdfData = pdfDatas[dataIndex]
+            pdfData.bookMark[index] = true
+            
+            pdfDatas[dataIndex] = pdfData
+        }
+    }
+    
+    func deleteBookmarkPDF(to pdfData: PDFData, with index: Int) {
+        if let dataIndex = pdfDatas.firstIndex(of: pdfData) {
+            var pdfData = pdfDatas[dataIndex]
+            pdfData.bookMark[index] = true
+            
+            pdfDatas[dataIndex] = pdfData
+        }
     }
 }

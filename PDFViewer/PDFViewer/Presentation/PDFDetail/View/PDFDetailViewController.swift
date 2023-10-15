@@ -51,12 +51,24 @@ final class PDFDetailViewController: UIViewController {
         navigationController?.isToolbarHidden = true
     }
     
-    @objc func tapNextButton() {
+    @objc private func tapNextButton() {
         viewModel.tapNextButton(pdfView)
     }
     
-    @objc func tapBackButton() {
+    @objc private func tapBackButton() {
         viewModel.tapBackButton(pdfView)
+    }
+    
+    private func addBookmark(_ action: UIAction) {
+        viewModel.addBookmark(pdfView)
+    }
+    
+    private func deleteBookmark(_ action: UIAction) {
+        viewModel.deleteBookmark(pdfView)
+    }
+    
+    private func moveBookmark(_ action: UIAction) {
+        viewModel.moveBookmark(pdfView)
     }
 }
 
@@ -92,7 +104,15 @@ extension PDFDetailViewController {
     }
     
     private func configureNavigation() {
+        let addBookmarkAction = UIAction(title: "add bookmark", handler: addBookmark)
+        let deleteBookmarkAction = UIAction(title: "delete bookmark", handler: deleteBookmark)
+        let moveBookmarkAction = UIAction(title: "move bookmark", handler: moveBookmark)
+        
+        let moreButton = UIBarButtonItem(image: UIImage(systemName: "ellipsis"), style: .plain, target: self, action: nil)
+        moreButton.menu = UIMenu(options: .displayInline, children: [addBookmarkAction, deleteBookmarkAction, moveBookmarkAction])
+        
         navigationItem.title = "PDF Detail"
+        navigationItem.rightBarButtonItem = moreButton
     }
     
     private func configureToolBar() {
