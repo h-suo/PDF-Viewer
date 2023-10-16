@@ -85,14 +85,10 @@ extension DefaultPDFListViewModel {
                 
             }
             
-            Task {
-                do {
-                    try await self.useCase.storePDFData(title: title, url: url)
-                } catch {
-                    DispatchQueue.main.async {
-                        self.actions.showFailAlert(error.localizedDescription)
-                    }
-                }
+            do {
+                try self.useCase.storePDFData(title: title, url: url)
+            } catch {
+                self.actions.showFailAlert(error.localizedDescription)
             }
         }
         

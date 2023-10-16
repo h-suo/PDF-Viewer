@@ -18,12 +18,16 @@
 		4582B89C2AD56EB700AF5EF4 /* PDFViewerUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4582B89B2AD56EB700AF5EF4 /* PDFViewerUseCase.swift */; };
 		4582B8A02AD5707C00AF5EF4 /* PDFListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4582B89F2AD5707C00AF5EF4 /* PDFListViewModel.swift */; };
 		4582B8A32AD639A200AF5EF4 /* PDFViewerCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4582B8A22AD639A200AF5EF4 /* PDFViewerCoordinator.swift */; };
-		4582B8A62AD66D0A00AF5EF4 /* PDFDataError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4582B8A52AD66D0A00AF5EF4 /* PDFDataError.swift */; };
+		4582B8A62AD66D0A00AF5EF4 /* UseCaseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4582B8A52AD66D0A00AF5EF4 /* UseCaseError.swift */; };
 		4582B8AA2AD688A400AF5EF4 /* UIAlertController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4582B8A92AD688A400AF5EF4 /* UIAlertController+.swift */; };
 		4582B8AC2AD68F5300AF5EF4 /* PDFDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4582B8AB2AD68F5300AF5EF4 /* PDFDetailViewModel.swift */; };
 		45B70FAC2ADCB91300441C4C /* PDFMemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B70FAB2ADCB91300441C4C /* PDFMemoViewController.swift */; };
 		45B70FAE2ADCBF0100441C4C /* UITextView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B70FAD2ADCBF0100441C4C /* UITextView+.swift */; };
 		45CD1B7D2ADD25AE002DEC57 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 45CD1B7C2ADD25AE002DEC57 /* RealmSwift */; };
+		45CD1B812ADD4458002DEC57 /* RealmRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CD1B802ADD4458002DEC57 /* RealmRepository.swift */; };
+		45CD1B832ADD55F4002DEC57 /* PDFDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CD1B822ADD55F4002DEC57 /* PDFDTO.swift */; };
+		45CD1B852ADD5679002DEC57 /* RepositoryError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CD1B842ADD5679002DEC57 /* RepositoryError.swift */; };
+		45CD1B892ADD576F002DEC57 /* PDFDataTranslater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CD1B882ADD576F002DEC57 /* PDFDataTranslater.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,11 +45,15 @@
 		4582B89B2AD56EB700AF5EF4 /* PDFViewerUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFViewerUseCase.swift; sourceTree = "<group>"; };
 		4582B89F2AD5707C00AF5EF4 /* PDFListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFListViewModel.swift; sourceTree = "<group>"; };
 		4582B8A22AD639A200AF5EF4 /* PDFViewerCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFViewerCoordinator.swift; sourceTree = "<group>"; };
-		4582B8A52AD66D0A00AF5EF4 /* PDFDataError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFDataError.swift; sourceTree = "<group>"; };
+		4582B8A52AD66D0A00AF5EF4 /* UseCaseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UseCaseError.swift; sourceTree = "<group>"; };
 		4582B8A92AD688A400AF5EF4 /* UIAlertController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+.swift"; sourceTree = "<group>"; };
 		4582B8AB2AD68F5300AF5EF4 /* PDFDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFDetailViewModel.swift; sourceTree = "<group>"; };
 		45B70FAB2ADCB91300441C4C /* PDFMemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFMemoViewController.swift; sourceTree = "<group>"; };
 		45B70FAD2ADCBF0100441C4C /* UITextView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+.swift"; sourceTree = "<group>"; };
+		45CD1B802ADD4458002DEC57 /* RealmRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmRepository.swift; sourceTree = "<group>"; };
+		45CD1B822ADD55F4002DEC57 /* PDFDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFDTO.swift; sourceTree = "<group>"; };
+		45CD1B842ADD5679002DEC57 /* RepositoryError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryError.swift; sourceTree = "<group>"; };
+		45CD1B882ADD576F002DEC57 /* PDFDataTranslater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFDataTranslater.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +91,7 @@
 				4513EDC92AD3D95200939A6E /* Application */,
 				4582B8962AD56D4E00AF5EF4 /* Domain */,
 				4513EDCA2AD3D97700939A6E /* Presentation */,
+				45CD1B7E2ADD43E9002DEC57 /* Data */,
 				4582B8A42AD66CE400AF5EF4 /* Error */,
 				4582B8A72AD6888000AF5EF4 /* Utils */,
 				4513EDCB2AD3D99000939A6E /* Resources */,
@@ -207,7 +216,8 @@
 		4582B8A42AD66CE400AF5EF4 /* Error */ = {
 			isa = PBXGroup;
 			children = (
-				4582B8A52AD66D0A00AF5EF4 /* PDFDataError.swift */,
+				4582B8A52AD66D0A00AF5EF4 /* UseCaseError.swift */,
+				45CD1B842ADD5679002DEC57 /* RepositoryError.swift */,
 			);
 			path = Error;
 			sourceTree = "<group>";
@@ -227,6 +237,40 @@
 				45B70FAD2ADCBF0100441C4C /* UITextView+.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		45CD1B7E2ADD43E9002DEC57 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				45CD1B862ADD572D002DEC57 /* DTO */,
+				45CD1B872ADD573E002DEC57 /* Translater */,
+				45CD1B7F2ADD443D002DEC57 /* Repositories */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		45CD1B7F2ADD443D002DEC57 /* Repositories */ = {
+			isa = PBXGroup;
+			children = (
+				45CD1B802ADD4458002DEC57 /* RealmRepository.swift */,
+			);
+			path = Repositories;
+			sourceTree = "<group>";
+		};
+		45CD1B862ADD572D002DEC57 /* DTO */ = {
+			isa = PBXGroup;
+			children = (
+				45CD1B822ADD55F4002DEC57 /* PDFDTO.swift */,
+			);
+			path = DTO;
+			sourceTree = "<group>";
+		};
+		45CD1B872ADD573E002DEC57 /* Translater */ = {
+			isa = PBXGroup;
+			children = (
+				45CD1B882ADD576F002DEC57 /* PDFDataTranslater.swift */,
+			);
+			path = Translater;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -329,10 +373,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				4582B8992AD56D6E00AF5EF4 /* PDFData.swift in Sources */,
-				4582B8A62AD66D0A00AF5EF4 /* PDFDataError.swift in Sources */,
+				45CD1B832ADD55F4002DEC57 /* PDFDTO.swift in Sources */,
+				4582B8A62AD66D0A00AF5EF4 /* UseCaseError.swift in Sources */,
 				4582B8A32AD639A200AF5EF4 /* PDFViewerCoordinator.swift in Sources */,
 				4582B8952AD53A6400AF5EF4 /* PDFDetailViewController.swift in Sources */,
 				4582B8AC2AD68F5300AF5EF4 /* PDFDetailViewModel.swift in Sources */,
+				45CD1B892ADD576F002DEC57 /* PDFDataTranslater.swift in Sources */,
+				45CD1B812ADD4458002DEC57 /* RealmRepository.swift in Sources */,
 				4582B8AA2AD688A400AF5EF4 /* UIAlertController+.swift in Sources */,
 				4513EDB82AD3C52100939A6E /* PDFListViewController.swift in Sources */,
 				4582B8A02AD5707C00AF5EF4 /* PDFListViewModel.swift in Sources */,
@@ -341,6 +388,7 @@
 				4513EDB42AD3C52100939A6E /* AppDelegate.swift in Sources */,
 				4582B89C2AD56EB700AF5EF4 /* PDFViewerUseCase.swift in Sources */,
 				4513EDD32AD3EC1300939A6E /* PDFListCell.swift in Sources */,
+				45CD1B852ADD5679002DEC57 /* RepositoryError.swift in Sources */,
 				4513EDB62AD3C52100939A6E /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

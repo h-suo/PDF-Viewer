@@ -10,58 +10,97 @@ import PDFKit
 protocol PDFViewerUseCase {
     var pdfDatasPublisher: Published<[PDFData]>.Publisher { get }
     
-    func storePDFData(title: String, url: URL) async throws
     func convertPDFDocument(url: URL) async -> PDFDocument?
-    func addBookmarkPDF(to pdfData: PDFData, with index: Int)
-    func deleteBookmarkPDF(to pdfData: PDFData, with index: Int)
-    func storePDFMemo(pdfData: PDFData, text: String, index: Int)
+    func storePDFData(title: String, url: URL) throws
+    func addBookmarkPDF(to pdfData: PDFData, with index: Int) throws
+    func deleteBookmarkPDF(to pdfData: PDFData, with index: Int) throws
+    func storePDFMemo(pdfData: PDFData, text: String, index: Int) throws
 }
 
 final class DefaultPDFViewerUseCase: PDFViewerUseCase {
     
     // MARK: - Private Property
-    @Published private var pdfDatas: [PDFData] = []
+    private let realmRepository: RealmRepository
+    @Published private var pdfDatas: [PDFData]
     
-    var pdfDatasPublisher: Published<[PDFData]>.Publisher { $pdfDatas }
-    
-    func storePDFData(title: String, url: URL) async throws {
-        guard PDFDocument(url: url) != nil else {
-            throw PDFDataError.invalidURL
-        }
+    // MARK: - Life Cycle
+    init(realmRepository: RealmRepository, pdfDatas: [PDFData] = []) {
+        self.realmRepository = realmRepository
+        self.pdfDatas = pdfDatas
         
-        let pdfData = PDFData(title: title, url: url)
-        
-        pdfDatas.append(pdfData)
+        loadData()
     }
+    
+    // MARK: - Load Data
+    private func loadData() {
+        let pdfEntitys = realmRepository.readAllPDFEntities()
+        
+        pdfDatas = pdfEntitys.compactMap {
+            PDFDataTranslater.convertToPDFData(pdfDTO: $0)
+        }
+    }
+}
+
+extension DefaultPDFViewerUseCase {
+    
+    // MARK: - PDFViewerUseCase
+    var pdfDatasPublisher: Published<[PDFData]>.Publisher { $pdfDatas }
     
     func convertPDFDocument(url: URL) async -> PDFDocument? {
         return PDFDocument(url: url)
     }
     
-    func addBookmarkPDF(to pdfData: PDFData, with index: Int) {
-        if let dataIndex = pdfDatas.firstIndex(of: pdfData) {
-            var pdfData = pdfDatas[dataIndex]
-            pdfData.bookMark[index] = true
-            
-            pdfDatas[dataIndex] = pdfData
+    func storePDFData(title: String, url: URL) throws {
+        guard PDFDocument(url: url) != nil else {
+            throw UseCaseError.storeDataFailed
         }
+        
+        let pdfData = PDFData(title: title, url: url)
+        let pdfDTO = PDFDataTranslater.convertToPDFDTO(pdfData: pdfData)
+        
+        try realmRepository.createPDFEntity(pdfEntity: pdfDTO)
+        loadData()
     }
     
-    func deleteBookmarkPDF(to pdfData: PDFData, with index: Int) {
-        if let dataIndex = pdfDatas.firstIndex(of: pdfData) {
-            var pdfData = pdfDatas[dataIndex]
-            pdfData.bookMark[index] = true
-            
-            pdfDatas[dataIndex] = pdfData
+    func addBookmarkPDF(to pdfData: PDFData, with index: Int) throws {
+        guard let dataIndex = pdfDatas.firstIndex(of: pdfData) else {
+            throw UseCaseError.addBookmarkFailed
         }
+        
+        var pdfData = pdfDatas[dataIndex]
+        pdfData.bookMark[index] = true
+        
+        let pdfDTO = PDFDataTranslater.convertToPDFDTO(pdfData: pdfData)
+        
+        try realmRepository.updatePDFEntity(pdfEntity: pdfDTO)
+        loadData()
     }
     
-    func storePDFMemo(pdfData: PDFData, text: String, index: Int) {
-        if let dataIndex = pdfDatas.firstIndex(of: pdfData) {
-            var pdfData = pdfDatas[dataIndex]
-            pdfData.memo[index] = text
-            
-            pdfDatas[dataIndex] = pdfData
+    func deleteBookmarkPDF(to pdfData: PDFData, with index: Int) throws {
+        guard let dataIndex = pdfDatas.firstIndex(of: pdfData) else {
+            throw UseCaseError.deleteBookmarkFailed
         }
+        
+        var pdfData = pdfDatas[dataIndex]
+        pdfData.bookMark[index] = false
+        
+        let pdfDTO = PDFDataTranslater.convertToPDFDTO(pdfData: pdfData)
+        
+        try realmRepository.updatePDFEntity(pdfEntity: pdfDTO)
+        loadData()
+    }
+    
+    func storePDFMemo(pdfData: PDFData, text: String, index: Int) throws {
+        guard let dataIndex = pdfDatas.firstIndex(of: pdfData) else {
+            throw UseCaseError.storeMemoFailed
+        }
+        
+        var pdfData = pdfDatas[dataIndex]
+        pdfData.memo[index] = text
+        
+        let pdfDTO = PDFDataTranslater.convertToPDFDTO(pdfData: pdfData)
+        
+        try realmRepository.updatePDFEntity(pdfEntity: pdfDTO)
+        loadData()
     }
 }

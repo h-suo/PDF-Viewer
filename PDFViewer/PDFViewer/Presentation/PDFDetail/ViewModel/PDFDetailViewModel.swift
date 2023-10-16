@@ -10,6 +10,7 @@ import Combine
 
 struct PDFDetailViewModelAction {
     let showBookmarkAlert: (UIAlertController) -> Void
+    let showFailAlert: (String) -> Void
     let showMemoView: (UIViewController) -> Void
 }
 
@@ -102,7 +103,11 @@ extension DefaultPDFDetailViewModel {
             return
         }
         
-        useCase.addBookmarkPDF(to: pdfData, with: currentIndex)
+        do {
+            try useCase.addBookmarkPDF(to: pdfData, with: currentIndex)
+        } catch {
+            actions.showFailAlert(error.localizedDescription)
+        }
     }
     
     func deleteBookmark(_ pdfView: PDFView) {
@@ -112,7 +117,11 @@ extension DefaultPDFDetailViewModel {
             return
         }
         
-        useCase.deleteBookmarkPDF(to: pdfData, with: currentIndex)
+        do {
+            try useCase.deleteBookmarkPDF(to: pdfData, with: currentIndex)
+        } catch {
+            actions.showFailAlert(error.localizedDescription)
+        }
     }
     
     func moveBookmark(_ pdfView: PDFView) {
@@ -156,6 +165,10 @@ extension DefaultPDFDetailViewModel: PDFMemoViewControllerDelegate {
             return
         }
         
-        useCase.storePDFMemo(pdfData: pdfData, text: text, index: noteIndex)
+        do {
+            try useCase.storePDFMemo(pdfData: pdfData, text: text, index: noteIndex)
+        } catch {
+            actions.showFailAlert(error.localizedDescription)
+        }
     }
 }
