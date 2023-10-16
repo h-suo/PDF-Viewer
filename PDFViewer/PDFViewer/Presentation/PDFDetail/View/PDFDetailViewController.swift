@@ -104,9 +104,9 @@ extension PDFDetailViewController {
     }
     
     private func configureNavigation() {
-        let addBookmarkAction = UIAction(title: "add bookmark", handler: addBookmark)
-        let deleteBookmarkAction = UIAction(title: "delete bookmark", handler: deleteBookmark)
-        let moveBookmarkAction = UIAction(title: "move bookmark", handler: moveBookmark)
+        let addBookmarkAction = UIAction(title: "add bookmark", image: UIImage(systemName: "bookmark"), handler: addBookmark)
+        let deleteBookmarkAction = UIAction(title: "delete bookmark", image: UIImage(systemName: "bookmark.slash"), handler: deleteBookmark)
+        let moveBookmarkAction = UIAction(title: "move bookmark", image: UIImage(systemName: "book"), handler: moveBookmark)
         
         let moreButton = UIBarButtonItem(image: UIImage(systemName: "ellipsis"), style: .plain, target: self, action: nil)
         moreButton.menu = UIMenu(options: .displayInline, children: [addBookmarkAction, deleteBookmarkAction, moveBookmarkAction])
