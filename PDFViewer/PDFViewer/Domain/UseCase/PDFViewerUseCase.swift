@@ -14,6 +14,7 @@ protocol PDFViewerUseCase {
     func convertPDFDocument(url: URL) async -> PDFDocument?
     func addBookmarkPDF(to pdfData: PDFData, with index: Int)
     func deleteBookmarkPDF(to pdfData: PDFData, with index: Int)
+    func storePDFMemo(pdfData: PDFData, text: String, index: Int)
 }
 
 final class DefaultPDFViewerUseCase: PDFViewerUseCase {
@@ -50,6 +51,15 @@ final class DefaultPDFViewerUseCase: PDFViewerUseCase {
         if let dataIndex = pdfDatas.firstIndex(of: pdfData) {
             var pdfData = pdfDatas[dataIndex]
             pdfData.bookMark[index] = true
+            
+            pdfDatas[dataIndex] = pdfData
+        }
+    }
+    
+    func storePDFMemo(pdfData: PDFData, text: String, index: Int) {
+        if let dataIndex = pdfDatas.firstIndex(of: pdfData) {
+            var pdfData = pdfDatas[dataIndex]
+            pdfData.memo[index] = text
             
             pdfDatas[dataIndex] = pdfData
         }

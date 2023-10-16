@@ -9,6 +9,7 @@ import PDFKit
 
 struct PDFDetailViewModelAction {
     let showBookmarkAlert: (UIAlertController) -> Void
+    let showMemoView: (UIViewController) -> Void
 }
 
 protocol PDFDetailViewModelInput {
@@ -18,6 +19,7 @@ protocol PDFDetailViewModelInput {
     func addBookmark(_ pdfView: PDFView)
     func deleteBookmark(_ pdfView: PDFView)
     func moveBookmark(_ pdfView: PDFView)
+    func showMemoView(_ pdfView: PDFView)
 }
 
 protocol PDFDetailViewModelOutput {
@@ -112,5 +114,26 @@ extension DefaultPDFDetailViewModel {
         alert.addAction(cancelAction)
         
         actions.showBookmarkAlert(alert)
+    }
+    
+    func showMemoView(_ pdfView: PDFView) {
+        guard let currentPage = pdfView.currentPage,
+              let currentIndex = pdfView.document?.index(for: currentPage) else {
+            return
+        }
+        
+        let memo = pdfData.memo[currentIndex] ?? ""
+        let memoViewController = PDFMemoViewController(memo: memo, index: currentIndex)
+        memoViewController.delegate = self
+        
+        actions.showMemoView(memoViewController)
+    }
+}
+
+extension DefaultPDFDetailViewModel: PDFMemoViewControllerDelegate {
+    func pdfMemoViewController(_ pdfMemoViewController: PDFMemoViewController, takeNotes text: String, noteIndex: Int) {
+        pdfData.memo[noteIndex] = text
+        
+        useCase.storePDFMemo(pdfData: pdfData, text: text, index: noteIndex)
     }
 }

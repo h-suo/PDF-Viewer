@@ -12,4 +12,5 @@ struct PDFData: Hashable {
     var title: String
     var url: URL
     var bookMark: [Int: Bool] = [:]
+    var memo: [Int: String] = [:]
 }

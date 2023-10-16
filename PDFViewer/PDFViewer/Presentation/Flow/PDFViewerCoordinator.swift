@@ -47,7 +47,8 @@ final class PDFViewerCoordinator {
     }
     
     private func makePDFDetailViewModel(pdfData: PDFData) -> PDFDetailViewModel {
-        let pdfDetailViewModelAction = PDFDetailViewModelAction(showBookmarkAlert: showAlert)
+        let pdfDetailViewModelAction = PDFDetailViewModelAction(showBookmarkAlert: showAlert,
+                                                                showMemoView: showMemoView)
         
         return DefaultPDFDetailViewModel(useCase: pdfViewerUseCase, pdfData: pdfData, actions: pdfDetailViewModelAction)
     }
@@ -67,5 +68,9 @@ final class PDFViewerCoordinator {
         let pdfDetailViewController = makePDFDetailViewController(pdfData: pdfData)
         
         presenter.pushViewController(pdfDetailViewController, animated: true)
+    }
+    
+    private func showMemoView(viewController: UIViewController) {
+        presenter.pushViewController(viewController, animated: true)
     }
 }

@@ -70,6 +70,10 @@ final class PDFDetailViewController: UIViewController {
     private func moveBookmark(_ action: UIAction) {
         viewModel.moveBookmark(pdfView)
     }
+    
+    private func showMemoView(_ action: UIAction) {
+        viewModel.showMemoView(pdfView)
+    }
 }
 
 // MARK: - Data Binding
@@ -107,9 +111,11 @@ extension PDFDetailViewController {
         let addBookmarkAction = UIAction(title: "add bookmark", image: UIImage(systemName: "bookmark"), handler: addBookmark)
         let deleteBookmarkAction = UIAction(title: "delete bookmark", image: UIImage(systemName: "bookmark.slash"), handler: deleteBookmark)
         let moveBookmarkAction = UIAction(title: "move bookmark", image: UIImage(systemName: "book"), handler: moveBookmark)
+        let memoAction = UIAction(title: "memo", image: UIImage(systemName: "note"), handler: showMemoView)
+        let bookmarkMenu = UIMenu(title: "bookmark", children: [addBookmarkAction, deleteBookmarkAction, moveBookmarkAction])
         
         let moreButton = UIBarButtonItem(image: UIImage(systemName: "ellipsis"), style: .plain, target: self, action: nil)
-        moreButton.menu = UIMenu(options: .displayInline, children: [addBookmarkAction, deleteBookmarkAction, moveBookmarkAction])
+        moreButton.menu = UIMenu(children: [bookmarkMenu, memoAction])
         
         navigationItem.title = "PDF Detail"
         navigationItem.rightBarButtonItem = moreButton

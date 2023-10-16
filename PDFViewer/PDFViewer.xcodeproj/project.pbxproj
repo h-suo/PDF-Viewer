@@ -21,6 +21,8 @@
 		4582B8A62AD66D0A00AF5EF4 /* PDFDataError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4582B8A52AD66D0A00AF5EF4 /* PDFDataError.swift */; };
 		4582B8AA2AD688A400AF5EF4 /* UIAlertController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4582B8A92AD688A400AF5EF4 /* UIAlertController+.swift */; };
 		4582B8AC2AD68F5300AF5EF4 /* PDFDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4582B8AB2AD68F5300AF5EF4 /* PDFDetailViewModel.swift */; };
+		45B70FAC2ADCB91300441C4C /* PDFMemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B70FAB2ADCB91300441C4C /* PDFMemoViewController.swift */; };
+		45B70FAE2ADCBF0100441C4C /* UITextView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B70FAD2ADCBF0100441C4C /* UITextView+.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +43,8 @@
 		4582B8A52AD66D0A00AF5EF4 /* PDFDataError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFDataError.swift; sourceTree = "<group>"; };
 		4582B8A92AD688A400AF5EF4 /* UIAlertController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+.swift"; sourceTree = "<group>"; };
 		4582B8AB2AD68F5300AF5EF4 /* PDFDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFDetailViewModel.swift; sourceTree = "<group>"; };
+		45B70FAB2ADCB91300441C4C /* PDFMemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFMemoViewController.swift; sourceTree = "<group>"; };
+		45B70FAD2ADCBF0100441C4C /* UITextView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -144,6 +148,7 @@
 			isa = PBXGroup;
 			children = (
 				4582B8942AD53A6400AF5EF4 /* PDFDetailViewController.swift */,
+				45B70FAB2ADCB91300441C4C /* PDFMemoViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -217,6 +222,7 @@
 			isa = PBXGroup;
 			children = (
 				4582B8A92AD688A400AF5EF4 /* UIAlertController+.swift */,
+				45B70FAD2ADCBF0100441C4C /* UITextView+.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -322,6 +328,8 @@
 				4582B8AA2AD688A400AF5EF4 /* UIAlertController+.swift in Sources */,
 				4513EDB82AD3C52100939A6E /* PDFListViewController.swift in Sources */,
 				4582B8A02AD5707C00AF5EF4 /* PDFListViewModel.swift in Sources */,
+				45B70FAC2ADCB91300441C4C /* PDFMemoViewController.swift in Sources */,
+				45B70FAE2ADCBF0100441C4C /* UITextView+.swift in Sources */,
 				4513EDB42AD3C52100939A6E /* AppDelegate.swift in Sources */,
 				4582B89C2AD56EB700AF5EF4 /* PDFViewerUseCase.swift in Sources */,
 				4513EDD32AD3EC1300939A6E /* PDFListCell.swift in Sources */,
