@@ -39,18 +39,18 @@ final class PDFViewerCoordinator {
         return DefaultPDFListViewModel(useCase: pdfViewerUseCase, actions: pdfListViewModelAction)
     }
     
-    private func makePDFDetailViewController(pdfData: PDFData) -> PDFDetailViewController {
-        let pdfDetailViewModel = makePDFDetailViewModel(pdfData: pdfData)
+    private func makePDFDetailViewController(index: Int) -> PDFDetailViewController {
+        let pdfDetailViewModel = makePDFDetailViewModel(index: index)
         let pdfDetailViewController = PDFDetailViewController(viewModel: pdfDetailViewModel)
         
         return pdfDetailViewController
     }
     
-    private func makePDFDetailViewModel(pdfData: PDFData) -> PDFDetailViewModel {
+    private func makePDFDetailViewModel(index: Int) -> PDFDetailViewModel {
         let pdfDetailViewModelAction = PDFDetailViewModelAction(showBookmarkAlert: showAlert,
                                                                 showMemoView: showMemoView)
         
-        return DefaultPDFDetailViewModel(useCase: pdfViewerUseCase, pdfData: pdfData, actions: pdfDetailViewModelAction)
+        return DefaultPDFDetailViewModel(useCase: pdfViewerUseCase, index: index, actions: pdfDetailViewModelAction)
     }
     
     // MARK: - Actions
@@ -64,8 +64,8 @@ final class PDFViewerCoordinator {
         presenter.present(failAlert, animated: true)
     }
     
-    private func showPDFDetailView(pdfData: PDFData) {
-        let pdfDetailViewController = makePDFDetailViewController(pdfData: pdfData)
+    private func showPDFDetailView(index: Int) {
+        let pdfDetailViewController = makePDFDetailViewController(index: index)
         
         presenter.pushViewController(pdfDetailViewController, animated: true)
     }

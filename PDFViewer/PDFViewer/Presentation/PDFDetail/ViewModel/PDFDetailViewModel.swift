@@ -6,6 +6,7 @@
 //
 
 import PDFKit
+import Combine
 
 struct PDFDetailViewModelAction {
     let showBookmarkAlert: (UIAlertController) -> Void
@@ -33,26 +34,47 @@ final class DefaultPDFDetailViewModel: PDFDetailViewModel {
     // MARK: - Private Property
     private let useCase: PDFViewerUseCase
     private let actions: PDFDetailViewModelAction
-    private var pdfData: PDFData
+    private let index: Int
+    private var pdfData: PDFData?
+    private var cancellables: [AnyCancellable] = []
     @Published private var pdfDocument: PDFDocument?
     
     // MARK: - Life Cycle
-    init(useCase: PDFViewerUseCase, pdfData: PDFData, actions: PDFDetailViewModelAction) {
+    init(useCase: PDFViewerUseCase, index: Int, actions: PDFDetailViewModelAction) {
         self.useCase = useCase
-        self.pdfData = pdfData
+        self.index = index
         self.actions = actions
         
-        loadPDFDocument()
+        setupBindings()
     }
     
     // MARK: - OUTPUT
     var pdfDocumentPublisher: Published<PDFDocument?>.Publisher { $pdfDocument }
 }
 
+// MARK: - Data Binding
+extension DefaultPDFDetailViewModel {
+    private func setupBindings() {
+        useCase.pdfDatasPublisher.sink { [weak self] pdfDatas in
+            guard let self else {
+                return
+            }
+            
+            self.pdfData = pdfDatas[self.index]
+            
+            if pdfDocument == nil {
+                self.loadPDFDocument()
+            }
+        }.store(in: &cancellables)
+    }
+}
+
 // MARK: - Load Data
 extension DefaultPDFDetailViewModel {
     private func loadPDFDocument() {
-        let pdfURL = pdfData.url
+        guard let pdfURL = pdfData?.url else {
+            return
+        }
         
         Task {
             pdfDocument = await useCase.convertPDFDocument(url: pdfURL)
@@ -75,22 +97,20 @@ extension DefaultPDFDetailViewModel {
     
     func addBookmark(_ pdfView: PDFView) {
         guard let currentPage = pdfView.currentPage,
-              let currentIndex = pdfView.document?.index(for: currentPage) else {
+              let currentIndex = pdfView.document?.index(for: currentPage),
+              let pdfData else {
             return
         }
-        
-        pdfData.bookMark[currentIndex] = true
         
         useCase.addBookmarkPDF(to: pdfData, with: currentIndex)
     }
     
     func deleteBookmark(_ pdfView: PDFView) {
         guard let currentPage = pdfView.currentPage,
-              let currentIndex = pdfView.document?.index(for: currentPage) else {
+              let currentIndex = pdfView.document?.index(for: currentPage),
+              let pdfData else {
             return
         }
-        
-        pdfData.bookMark[currentIndex] = false
         
         useCase.deleteBookmarkPDF(to: pdfData, with: currentIndex)
     }
@@ -98,8 +118,8 @@ extension DefaultPDFDetailViewModel {
     func moveBookmark(_ pdfView: PDFView) {
         let alert = UIAlertController(title: "bookmark", message: "", preferredStyle: .actionSheet)
         let cancelAction = UIAlertAction(title: "cancel", style: .cancel)
-        let bookmarkIndexs = pdfData.bookMark.filter { $0.value == true }
-        bookmarkIndexs.keys.forEach { index in
+        let bookmarkIndexs = pdfData?.bookMark.filter { $0.value == true }
+        bookmarkIndexs?.keys.forEach { index in
             let action = UIAlertAction(title: "page \(index + 1)", style: .default) { _ in
                 guard let page = pdfView.document?.page(at: index) else {
                     return
@@ -122,7 +142,7 @@ extension DefaultPDFDetailViewModel {
             return
         }
         
-        let memo = pdfData.memo[currentIndex] ?? ""
+        let memo = pdfData?.memo[currentIndex] ?? ""
         let memoViewController = PDFMemoViewController(memo: memo, index: currentIndex)
         memoViewController.delegate = self
         
@@ -132,7 +152,9 @@ extension DefaultPDFDetailViewModel {
 
 extension DefaultPDFDetailViewModel: PDFMemoViewControllerDelegate {
     func pdfMemoViewController(_ pdfMemoViewController: PDFMemoViewController, takeNotes text: String, noteIndex: Int) {
-        pdfData.memo[noteIndex] = text
+        guard let pdfData else {
+            return
+        }
         
         useCase.storePDFMemo(pdfData: pdfData, text: text, index: noteIndex)
     }
