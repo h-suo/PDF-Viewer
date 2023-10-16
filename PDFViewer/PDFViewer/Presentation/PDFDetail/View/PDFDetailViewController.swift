@@ -45,6 +45,12 @@ final class PDFDetailViewController: UIViewController {
         viewModel.viewDidLoad()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        navigationController?.isToolbarHidden = false
+    }
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
@@ -126,7 +132,6 @@ extension PDFDetailViewController {
         let nextButton = UIBarButtonItem(image: UIImage(systemName: "chevron.right"), style: .plain, target: self, action: #selector(tapNextButton))
         let backButton = UIBarButtonItem(image: UIImage(systemName: "chevron.left"), style: .plain, target: self, action: #selector(tapBackButton))
         
-        navigationController?.isToolbarHidden = false
         toolbarItems = [backButton, flexibleSpace, nextButton]
     }
     

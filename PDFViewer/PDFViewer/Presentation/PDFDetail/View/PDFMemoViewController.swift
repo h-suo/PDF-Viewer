@@ -76,7 +76,7 @@ extension PDFMemoViewController {
     private func configureNavigation() {
         let doneAction = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(tapDoneButton))
         
-        navigationItem.title = "Memo"
+        navigationItem.title = "Page\(index + 1) Memo"
         navigationItem.rightBarButtonItem = doneAction
     }
     
