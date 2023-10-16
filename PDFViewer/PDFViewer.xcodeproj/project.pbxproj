@@ -23,6 +23,7 @@
 		4582B8AC2AD68F5300AF5EF4 /* PDFDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4582B8AB2AD68F5300AF5EF4 /* PDFDetailViewModel.swift */; };
 		45B70FAC2ADCB91300441C4C /* PDFMemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B70FAB2ADCB91300441C4C /* PDFMemoViewController.swift */; };
 		45B70FAE2ADCBF0100441C4C /* UITextView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B70FAD2ADCBF0100441C4C /* UITextView+.swift */; };
+		45CD1B7D2ADD25AE002DEC57 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 45CD1B7C2ADD25AE002DEC57 /* RealmSwift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,6 +53,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				45CD1B7D2ADD25AE002DEC57 /* RealmSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -244,6 +246,9 @@
 			dependencies = (
 			);
 			name = PDFViewer;
+			packageProductDependencies = (
+				45CD1B7C2ADD25AE002DEC57 /* RealmSwift */,
+			);
 			productName = PDFViewer;
 			productReference = 4513EDB02AD3C52100939A6E /* PDFViewer.app */;
 			productType = "com.apple.product-type.application";
@@ -272,6 +277,9 @@
 				Base,
 			);
 			mainGroup = 4513EDA72AD3C52100939A6E;
+			packageReferences = (
+				45CD1B7B2ADD25AE002DEC57 /* XCRemoteSwiftPackageReference "realm-cocoa" */,
+			);
 			productRefGroup = 4513EDB12AD3C52100939A6E /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -547,6 +555,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		45CD1B7B2ADD25AE002DEC57 /* XCRemoteSwiftPackageReference "realm-cocoa" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/realm-cocoa.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		45CD1B7C2ADD25AE002DEC57 /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 45CD1B7B2ADD25AE002DEC57 /* XCRemoteSwiftPackageReference "realm-cocoa" */;
+			productName = RealmSwift;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 4513EDA82AD3C52100939A6E /* Project object */;
 }
