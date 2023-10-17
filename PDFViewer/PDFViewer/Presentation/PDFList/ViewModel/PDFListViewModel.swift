@@ -52,7 +52,11 @@ final class DefaultPDFListViewModel: PDFListViewModel {
 // MARK: - Data Binding
 extension DefaultPDFListViewModel {
     private func setupBindings() {
-        useCase.pdfDatasPublisher.sink { pdfDatas in
+        useCase.pdfDatasPublisher.sink { [weak self] pdfDatas in
+            guard let self else {
+                return
+            }
+            
             self.pdfDatas = pdfDatas
         }.store(in: &cancellables)
     }
