@@ -59,7 +59,8 @@ extension PDFListViewController {
 // MARK: - Configure UI Object
 extension PDFListViewController {
     private func makeCollectionViewLayout() -> UICollectionViewCompositionalLayout {
-        let configuration = UICollectionLayoutListConfiguration(appearance: .plain)
+        var configuration = UICollectionLayoutListConfiguration(appearance: .plain)
+        configuration.trailingSwipeActionsConfigurationProvider = makeSwipeActions
         
         return UICollectionViewCompositionalLayout.list(using: configuration)
     }
@@ -103,6 +104,23 @@ extension PDFListViewController: UICollectionViewDelegate {
         viewModel.selectItem(at: indexPath.row)
         
         collectionView.deselectItem(at: indexPath, animated: true)
+    }
+    
+    private func makeSwipeActions(for index: IndexPath?) -> UISwipeActionsConfiguration? {
+        guard let index else {
+            return nil
+        }
+        
+        let deleteAction = UIContextualAction(style: .destructive, title: "delete") { [weak self] _, _, completion in
+            guard let self else {
+                return
+            }
+            
+            self.viewModel.deleteItem(at: index.row)
+            completion(true)
+        }
+        
+        return UISwipeActionsConfiguration(actions: [deleteAction])
     }
 }
 

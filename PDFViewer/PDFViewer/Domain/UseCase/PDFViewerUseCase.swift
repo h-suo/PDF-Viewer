@@ -15,6 +15,7 @@ protocol PDFViewerUseCase {
     func addBookmarkPDF(to pdfData: PDFData, with index: Int) throws
     func deleteBookmarkPDF(to pdfData: PDFData, with index: Int) throws
     func storePDFMemo(pdfData: PDFData, text: String, index: Int) throws
+    func deletePDFData(pdfData: PDFData) throws
 }
 
 final class DefaultPDFViewerUseCase: PDFViewerUseCase {
@@ -101,6 +102,13 @@ extension DefaultPDFViewerUseCase {
         let pdfDTO = PDFDataTranslater.convertToPDFDTO(pdfData: pdfData)
         
         try realmRepository.updatePDFEntity(pdfEntity: pdfDTO)
+        loadData()
+    }
+    
+    func deletePDFData(pdfData: PDFData) throws {
+        let pdfDTO = PDFDataTranslater.convertToPDFDTO(pdfData: pdfData)
+        
+        try realmRepository.deletePDFEntity(pdfEntity: pdfDTO)
         loadData()
     }
 }

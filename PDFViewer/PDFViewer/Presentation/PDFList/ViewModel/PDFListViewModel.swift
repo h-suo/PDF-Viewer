@@ -104,7 +104,11 @@ extension DefaultPDFListViewModel {
     }
     
     func deleteItem(at index: Int) {
-        
+        do {
+            try useCase.deletePDFData(pdfData: pdfDatas[index])
+        } catch {
+            actions.showFailAlert(error.localizedDescription)
+        }
     }
     
     func selectItem(at index: Int) {

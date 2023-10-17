@@ -56,6 +56,7 @@ class RealmRepository {
     func deletePDFEntity(pdfEntity: PDFDTO) throws {
         do {
             try realm.write {
+                realm.add(pdfEntity, update: .all)
                 realm.delete(pdfEntity)
             }
         } catch {
