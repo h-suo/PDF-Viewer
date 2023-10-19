@@ -40,7 +40,7 @@ class RealmRepository {
     }
     
     func createPDFEntity(title: String, url: URL) throws {
-        guard PDFDocument(url: url) != nil else {
+        guard url.absoluteString.hasSuffix("pdf") else {
             throw UseCaseError.storeDataFailed
         }
         

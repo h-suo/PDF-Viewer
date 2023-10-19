@@ -16,9 +16,9 @@
 		4582B8952AD53A6400AF5EF4 /* PDFDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4582B8942AD53A6400AF5EF4 /* PDFDetailViewController.swift */; };
 		4582B8992AD56D6E00AF5EF4 /* PDFData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4582B8982AD56D6E00AF5EF4 /* PDFData.swift */; };
 		4582B8A02AD5707C00AF5EF4 /* PDFListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4582B89F2AD5707C00AF5EF4 /* PDFListViewModel.swift */; };
-		4582B8A32AD639A200AF5EF4 /* PDFViewerCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4582B8A22AD639A200AF5EF4 /* PDFViewerCoordinator.swift */; };
+		4582B8A32AD639A200AF5EF4 /* DIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4582B8A22AD639A200AF5EF4 /* DIContainer.swift */; };
 		4582B8A62AD66D0A00AF5EF4 /* UseCaseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4582B8A52AD66D0A00AF5EF4 /* UseCaseError.swift */; };
-		4582B8AA2AD688A400AF5EF4 /* UIAlertController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4582B8A92AD688A400AF5EF4 /* UIAlertController+.swift */; };
+		4582B8AA2AD688A400AF5EF4 /* UIViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4582B8A92AD688A400AF5EF4 /* UIViewController+.swift */; };
 		4582B8AC2AD68F5300AF5EF4 /* PDFDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4582B8AB2AD68F5300AF5EF4 /* PDFDetailViewModel.swift */; };
 		45B70FAC2ADCB91300441C4C /* PDFMemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B70FAB2ADCB91300441C4C /* PDFMemoViewController.swift */; };
 		45B70FAE2ADCBF0100441C4C /* UITextView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B70FAD2ADCBF0100441C4C /* UITextView+.swift */; };
@@ -42,9 +42,9 @@
 		4582B8942AD53A6400AF5EF4 /* PDFDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFDetailViewController.swift; sourceTree = "<group>"; };
 		4582B8982AD56D6E00AF5EF4 /* PDFData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFData.swift; sourceTree = "<group>"; };
 		4582B89F2AD5707C00AF5EF4 /* PDFListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFListViewModel.swift; sourceTree = "<group>"; };
-		4582B8A22AD639A200AF5EF4 /* PDFViewerCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFViewerCoordinator.swift; sourceTree = "<group>"; };
+		4582B8A22AD639A200AF5EF4 /* DIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIContainer.swift; sourceTree = "<group>"; };
 		4582B8A52AD66D0A00AF5EF4 /* UseCaseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UseCaseError.swift; sourceTree = "<group>"; };
-		4582B8A92AD688A400AF5EF4 /* UIAlertController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+.swift"; sourceTree = "<group>"; };
+		4582B8A92AD688A400AF5EF4 /* UIViewController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+.swift"; sourceTree = "<group>"; };
 		4582B8AB2AD68F5300AF5EF4 /* PDFDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFDetailViewModel.swift; sourceTree = "<group>"; };
 		45B70FAB2ADCB91300441C4C /* PDFMemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFMemoViewController.swift; sourceTree = "<group>"; };
 		45B70FAD2ADCBF0100441C4C /* UITextView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+.swift"; sourceTree = "<group>"; };
@@ -102,6 +102,7 @@
 			children = (
 				4513EDB32AD3C52100939A6E /* AppDelegate.swift */,
 				4513EDB52AD3C52100939A6E /* SceneDelegate.swift */,
+				4582B8A12AD6398700AF5EF4 /* DIContainer */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -109,7 +110,6 @@
 		4513EDCA2AD3D97700939A6E /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
-				4582B8A12AD6398700AF5EF4 /* Flow */,
 				4513EDCC2AD3DAF300939A6E /* PDFList */,
 				4582B8922AD53A3D00AF5EF4 /* PDFDetail */,
 			);
@@ -194,12 +194,12 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
-		4582B8A12AD6398700AF5EF4 /* Flow */ = {
+		4582B8A12AD6398700AF5EF4 /* DIContainer */ = {
 			isa = PBXGroup;
 			children = (
-				4582B8A22AD639A200AF5EF4 /* PDFViewerCoordinator.swift */,
+				4582B8A22AD639A200AF5EF4 /* DIContainer.swift */,
 			);
-			path = Flow;
+			path = DIContainer;
 			sourceTree = "<group>";
 		};
 		4582B8A42AD66CE400AF5EF4 /* Error */ = {
@@ -222,7 +222,7 @@
 		4582B8A82AD6889100AF5EF4 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				4582B8A92AD688A400AF5EF4 /* UIAlertController+.swift */,
+				4582B8A92AD688A400AF5EF4 /* UIViewController+.swift */,
 				45B70FAD2ADCBF0100441C4C /* UITextView+.swift */,
 			);
 			path = Extensions;
@@ -364,12 +364,12 @@
 				4582B8992AD56D6E00AF5EF4 /* PDFData.swift in Sources */,
 				45CD1B832ADD55F4002DEC57 /* PDFDTO.swift in Sources */,
 				4582B8A62AD66D0A00AF5EF4 /* UseCaseError.swift in Sources */,
-				4582B8A32AD639A200AF5EF4 /* PDFViewerCoordinator.swift in Sources */,
+				4582B8A32AD639A200AF5EF4 /* DIContainer.swift in Sources */,
 				4582B8952AD53A6400AF5EF4 /* PDFDetailViewController.swift in Sources */,
 				4582B8AC2AD68F5300AF5EF4 /* PDFDetailViewModel.swift in Sources */,
 				45CD1B892ADD576F002DEC57 /* PDFDataTranslater.swift in Sources */,
 				45CD1B812ADD4458002DEC57 /* RealmRepository.swift in Sources */,
-				4582B8AA2AD688A400AF5EF4 /* UIAlertController+.swift in Sources */,
+				4582B8AA2AD688A400AF5EF4 /* UIViewController+.swift in Sources */,
 				4513EDB82AD3C52100939A6E /* PDFListViewController.swift in Sources */,
 				4582B8A02AD5707C00AF5EF4 /* PDFListViewModel.swift in Sources */,
 				45B70FAC2ADCB91300441C4C /* PDFMemoViewController.swift in Sources */,

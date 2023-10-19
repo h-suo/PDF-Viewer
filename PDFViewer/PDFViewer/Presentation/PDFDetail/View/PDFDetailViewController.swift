@@ -57,27 +57,76 @@ final class PDFDetailViewController: UIViewController {
     }
     
     @objc private func tapNextButton() {
-        viewModel.tapNextButton(pdfView)
+        pdfView.goToNextPage(nil)
     }
     
     @objc private func tapBackButton() {
-        viewModel.tapBackButton(pdfView)
+        pdfView.goToPreviousPage(nil)
     }
     
     private func addBookmark(_ action: UIAction) {
-        viewModel.addBookmark(pdfView)
+        guard let currentPage = pdfView.currentPage,
+              let currentIndex = pdfView.document?.index(for: currentPage) else {
+            return
+        }
+        
+        do {
+            try viewModel.addBookmark(at: currentIndex)
+        } catch {
+            self.presentFailAlert(message: error.localizedDescription)
+        }
     }
     
     private func deleteBookmark(_ action: UIAction) {
-        viewModel.deleteBookmark(pdfView)
+        guard let currentPage = pdfView.currentPage,
+              let currentIndex = pdfView.document?.index(for: currentPage) else {
+            return
+        }
+        
+        do {
+            try viewModel.addBookmark(at: currentIndex)
+        } catch {
+            self.presentFailAlert(message: error.localizedDescription)
+        }
     }
     
     private func moveBookmark(_ action: UIAction) {
-        viewModel.moveBookmark(pdfView)
+        guard let bookmarkIndexs = viewModel.bookMarks() else {
+            return
+        }
+        
+        let alert = UIAlertController(title: "bookmark", message: "", preferredStyle: .actionSheet)
+        let cancelAction = UIAlertAction(title: "cancel", style: .cancel)
+        
+        bookmarkIndexs.forEach { index in
+            let action = UIAlertAction(title: "page \(index + 1)", style: .default) { [weak self] _ in
+                guard let self,
+                      let page = self.pdfView.document?.page(at: index) else {
+                    return
+                }
+                
+                self.pdfView.go(to: page)
+            }
+            
+            alert.addAction(action)
+        }
+        
+        alert.addAction(cancelAction)
+        
+        present(alert, animated: true)
     }
     
     private func showMemoView(_ action: UIAction) {
-        viewModel.showMemoView(pdfView)
+        guard let currentPage = pdfView.currentPage,
+              let currentIndex = pdfView.document?.index(for: currentPage) else {
+            return
+        }
+        
+        let memo = viewModel.memo(at: currentIndex)
+        let memoViewController = DIContainer().makePDFMemoViewController(text: memo, index: currentIndex)
+        memoViewController.delegate = self
+        
+        navigationController?.pushViewController(memoViewController, animated: true)
     }
 }
 
@@ -99,6 +148,16 @@ extension PDFDetailViewController {
     private func configurePDFView(pdfDocument: PDFDocument?) {
         DispatchQueue.main.async {
             self.pdfView.document = pdfDocument
+        }
+    }
+}
+
+extension PDFDetailViewController: PDFMemoViewControllerDelegate {
+    func pdfMemoViewController(_ pdfMemoViewController: PDFMemoViewController, takeNotes text: String, noteIndex: Int) {
+        do {
+            try viewModel.storeMemo(text: text, index: noteIndex)
+        } catch {
+            presentFailAlert(message: error.localizedDescription)
         }
     }
 }

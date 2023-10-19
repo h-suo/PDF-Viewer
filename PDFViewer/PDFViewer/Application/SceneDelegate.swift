@@ -16,12 +16,10 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             return
         }
         
-        let navigationController = UINavigationController()
-        let coordinator = PDFViewerCoordinator(presenter: navigationController)
-        coordinator.start()
+        let PDFListViewController = DIContainer().makePDFListViewController()
         
         window = UIWindow(windowScene: windowScene)
-        window?.rootViewController = navigationController
+        window?.rootViewController = UINavigationController(rootViewController: PDFListViewController)
         window?.makeKeyAndVisible()
     }
 }

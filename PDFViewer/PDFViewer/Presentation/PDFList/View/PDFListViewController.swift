@@ -39,7 +39,35 @@ final class PDFListViewController: UIViewController {
     }
     
     @objc private func tapAddButton() {
-        viewModel.tapAddButton()
+        let alert = UIAlertController(title: "Load PDF", message: "Enter the URL to load the PDF.", preferredStyle: .alert)
+        alert.addTextField { textField in
+            textField.placeholder = "Enter the Title"
+        }
+        alert.addTextField { textField in
+            textField.placeholder = "Enter the URL"
+        }
+        
+        let cancelAction = UIAlertAction(title: "cancel", style: .cancel)
+        let addAction = UIAlertAction(title: "Add", style: .default) { [weak self] _ in
+            guard let self,
+                  let title = alert.textFields?[0].text,
+                  let urlString = alert.textFields?[1].text else {
+                self?.presentFailAlert(message: "Please enter Title and URL.")
+                return
+            }
+            
+            do {
+                try self.viewModel.storePDF(title: title, urlString: urlString)
+            } catch {
+                self.presentFailAlert(message: error.localizedDescription)
+            }
+        }
+        
+        [cancelAction, addAction].forEach {
+            alert.addAction($0)
+        }
+        
+        present(alert, animated: true)
     }
 }
 
@@ -100,13 +128,15 @@ extension PDFListViewController {
 // MARK: - CollectionView Delegate
 extension PDFListViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        viewModel.selectItem(at: indexPath.row)
+        let PDFDetailViewController = DIContainer().makePDFDetailViewController(index: indexPath.row)
         
+        navigationController?.pushViewController(PDFDetailViewController, animated: true)
+
         collectionView.deselectItem(at: indexPath, animated: true)
     }
     
-    private func makeSwipeActions(for index: IndexPath?) -> UISwipeActionsConfiguration? {
-        guard let index else {
+    private func makeSwipeActions(for indexPath: IndexPath?) -> UISwipeActionsConfiguration? {
+        guard let indexPath else {
             return nil
         }
         
@@ -115,8 +145,12 @@ extension PDFListViewController: UICollectionViewDelegate {
                 return
             }
             
-            self.viewModel.deleteItem(at: index.row)
-            completion(true)
+            do {
+                try self.viewModel.deletePDF(at: indexPath.row)
+                completion(true)
+            } catch {
+                self.presentFailAlert(message: error.localizedDescription)
+            }
         }
         
         return UISwipeActionsConfiguration(actions: [deleteAction])
