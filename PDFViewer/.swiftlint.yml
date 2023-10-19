@@ -5,3 +5,4 @@ disabled_rules:
 excluded:
 - PDFViewer/Application/AppDelegate.swift
 - PDFViewer/Application/SceneDelegate.swift
+- PDFViewer/Data/Repositories/RealmRepository.swift

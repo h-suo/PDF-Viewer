@@ -11,7 +11,6 @@ final class PDFViewerCoordinator {
     
     // MARK: - Private Property
     private var presenter: UINavigationController
-    private lazy var pdfViewerUseCase = DefaultPDFViewerUseCase(realmRepository: RealmRepository()!)
     
     init(presenter: UINavigationController) {
         self.presenter = presenter
@@ -36,7 +35,7 @@ final class PDFViewerCoordinator {
                                                             showFailAlert: showFailAlert,
                                                             showPDFDetailView: showPDFDetailView)
         
-        return DefaultPDFListViewModel(useCase: pdfViewerUseCase, actions: pdfListViewModelAction)
+        return DefaultPDFListViewModel(repository: RealmRepository.shared, actions: pdfListViewModelAction)
     }
     
     private func makePDFDetailViewController(index: Int) -> PDFDetailViewController {
@@ -51,7 +50,7 @@ final class PDFViewerCoordinator {
                                                                 showFailAlert: showFailAlert,
                                                                 showMemoView: showMemoView)
         
-        return DefaultPDFDetailViewModel(useCase: pdfViewerUseCase, index: index, actions: pdfDetailViewModelAction)
+        return DefaultPDFDetailViewModel(repository: RealmRepository.shared, index: index, actions: pdfDetailViewModelAction)
     }
     
     // MARK: - Actions

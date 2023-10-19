@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import Combine
 
 struct PDFListViewModelAction {
     let showAddAlert: (UIAlertController) -> Void
@@ -30,35 +29,28 @@ typealias PDFListViewModel = PDFListViewModelInput & PDFListViewModelOutput
 final class DefaultPDFListViewModel: PDFListViewModel {
     
     // MARK: - Private Property
-    private let useCase: PDFViewerUseCase
+    private let repository: RealmRepository
     private let actions: PDFListViewModelAction
-    private var cancellables: [AnyCancellable] = []
     @Published private var pdfDatas: [PDFData] = []
     
     // MARK: - Life Cycle
-    init(useCase: PDFViewerUseCase,
+    init(repository: RealmRepository,
          actions: PDFListViewModelAction
     ) {
-        self.useCase = useCase
+        self.repository = repository
         self.actions = actions
         
-        setupBindings()
+        loadPDFData()
     }
     
     // MARK: - OUTPUT
     var pdfDatasPublisher: Published<[PDFData]>.Publisher { $pdfDatas }
 }
 
-// MARK: - Data Binding
+// MARK: - Load Data
 extension DefaultPDFListViewModel {
-    private func setupBindings() {
-        useCase.pdfDatasPublisher.sink { [weak self] pdfDatas in
-            guard let self else {
-                return
-            }
-            
-            self.pdfDatas = pdfDatas
-        }.store(in: &cancellables)
+    private func loadPDFData() {
+        pdfDatas = repository.readAllPDFEntities()
     }
 }
 
@@ -86,11 +78,12 @@ extension DefaultPDFListViewModel {
             }
             
             if title == "" || urlString == "" {
-                
+                return
             }
             
             do {
-                try self.useCase.storePDFData(title: title, url: url)
+                try repository.createPDFEntity(title: title, url: url)
+                loadPDFData()
             } catch {
                 self.actions.showFailAlert(error.localizedDescription)
             }
@@ -104,8 +97,11 @@ extension DefaultPDFListViewModel {
     }
     
     func deleteItem(at index: Int) {
+        let deletePDFData = pdfDatas[index]
+        
         do {
-            try useCase.deletePDFData(pdfData: pdfDatas[index])
+            try repository.deletePDFEntity(pdfData: deletePDFData)
+            loadPDFData()
         } catch {
             actions.showFailAlert(error.localizedDescription)
         }

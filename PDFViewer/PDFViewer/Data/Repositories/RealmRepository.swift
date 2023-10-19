@@ -6,58 +6,75 @@
 //
 
 import RealmSwift
-import Foundation
+import PDFKit
 
 class RealmRepository {
+    
+    // MARK: - Static Property
+    static let shared = RealmRepository()
     
     // MARK: - Private Property
     private var realm: Realm
     
     // MARK: - Life Cycle
-    init?() {
-        do {
-            self.realm = try Realm()
-        } catch {
-            return nil
-        }
+    private init() {
+        realm = try! Realm()
     }
     
     // MARK: - CRUD Function
-    func readAllPDFEntities() -> [PDFDTO] {
-        let result = realm.objects(PDFDTO.self)
+    func readAllPDFEntities() -> [PDFData] {
+        let objects = realm.objects(PDFDTO.self)
+        let pdfDTOs = Array(objects)
         
-        return Array(result)
+        return pdfDTOs.compactMap {
+            PDFDataTranslater.convertToPDFData(pdfDTO: $0)
+        }
     }
 
-    func readPDFEntity(withID id: UUID) -> PDFDTO? {
-        return realm.object(ofType: PDFDTO.self, forPrimaryKey: id)
+    func readPDFEntity(withID id: UUID) -> PDFData? {
+        guard let pdfDTO = realm.object(ofType: PDFDTO.self, forPrimaryKey: id) else {
+            return nil
+        }
+        
+        return PDFDataTranslater.convertToPDFData(pdfDTO: pdfDTO)
     }
     
-    func createPDFEntity(pdfEntity: PDFDTO) throws {
+    func createPDFEntity(title: String, url: URL) throws {
+        guard PDFDocument(url: url) != nil else {
+            throw UseCaseError.storeDataFailed
+        }
+        
+        let pdfData = PDFData(title: title, url: url)
+        let pdfDTO = PDFDataTranslater.convertToPDFDTO(pdfData: pdfData)
+        
         do {
             try realm.write {
-                realm.add(pdfEntity)
+                realm.add(pdfDTO)
             }
         } catch {
             throw RepositoryError.creationFailed
         }
     }
 
-    func updatePDFEntity(pdfEntity: PDFDTO) throws {
+    func updatePDFEntity(pdfData: PDFData) throws {
+        let pdfDTO = PDFDataTranslater.convertToPDFDTO(pdfData: pdfData)
+        
         do {
             try realm.write {
-                realm.add(pdfEntity, update: .modified)
+                realm.add(pdfDTO, update: .modified)
             }
         } catch {
             throw RepositoryError.updateFailed
         }
     }
 
-    func deletePDFEntity(pdfEntity: PDFDTO) throws {
+    func deletePDFEntity(pdfData: PDFData) throws {
+        let pdfDTO = PDFDataTranslater.convertToPDFDTO(pdfData: pdfData)
+        
         do {
             try realm.write {
-                realm.add(pdfEntity, update: .all)
-                realm.delete(pdfEntity)
+                realm.add(pdfDTO, update: .all)
+                realm.delete(pdfDTO)
             }
         } catch {
             throw RepositoryError.deletionFailed

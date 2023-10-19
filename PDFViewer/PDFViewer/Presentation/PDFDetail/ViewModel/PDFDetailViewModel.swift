@@ -6,7 +6,6 @@
 //
 
 import PDFKit
-import Combine
 
 struct PDFDetailViewModelAction {
     let showBookmarkAlert: (UIAlertController) -> Void
@@ -33,40 +32,37 @@ typealias PDFDetailViewModel = PDFDetailViewModelInput & PDFDetailViewModelOutpu
 final class DefaultPDFDetailViewModel: PDFDetailViewModel {
     
     // MARK: - Private Property
-    private let useCase: PDFViewerUseCase
+    private let repository: RealmRepository
     private let actions: PDFDetailViewModelAction
     private let index: Int
     private var pdfData: PDFData?
-    private var cancellables: [AnyCancellable] = []
     @Published private var pdfDocument: PDFDocument?
     
     // MARK: - Life Cycle
-    init(useCase: PDFViewerUseCase, index: Int, actions: PDFDetailViewModelAction) {
-        self.useCase = useCase
+    init(repository: RealmRepository,
+         index: Int,
+         actions: PDFDetailViewModelAction
+    ) {
+        self.repository = repository
         self.index = index
         self.actions = actions
         
-        setupBindings()
+        loadPDFData()
     }
     
     // MARK: - OUTPUT
     var pdfDocumentPublisher: Published<PDFDocument?>.Publisher { $pdfDocument }
 }
 
-// MARK: - Data Binding
+// MARK: - Load Data
 extension DefaultPDFDetailViewModel {
-    private func setupBindings() {
-        useCase.pdfDatasPublisher.sink { [weak self] pdfDatas in
-            guard let self else {
-                return
-            }
-            
-            self.pdfData = pdfDatas[self.index]
-            
-            if pdfDocument == nil {
-                self.loadPDFDocument()
-            }
-        }.store(in: &cancellables)
+    private func loadPDFData() {
+        let pdfDatas = repository.readAllPDFEntities()
+        pdfData = pdfDatas[index]
+        
+        if pdfDocument == nil {
+            loadPDFDocument()
+        }
     }
 }
 
@@ -77,9 +73,7 @@ extension DefaultPDFDetailViewModel {
             return
         }
         
-        Task {
-            pdfDocument = await useCase.convertPDFDocument(url: pdfURL)
-        }
+        pdfDocument = PDFDocument(url: pdfURL)
     }
 }
 
@@ -103,8 +97,12 @@ extension DefaultPDFDetailViewModel {
             return
         }
         
+        var newPDFData = pdfData
+        newPDFData.bookMark[currentIndex] = true
+        
         do {
-            try useCase.addBookmarkPDF(to: pdfData, with: currentIndex)
+            try repository.updatePDFEntity(pdfData: newPDFData)
+            loadPDFData()
         } catch {
             actions.showFailAlert(error.localizedDescription)
         }
@@ -117,8 +115,12 @@ extension DefaultPDFDetailViewModel {
             return
         }
         
+        var newPDFData = pdfData
+        newPDFData.bookMark[currentIndex] = false
+        
         do {
-            try useCase.deleteBookmarkPDF(to: pdfData, with: currentIndex)
+            try repository.updatePDFEntity(pdfData: newPDFData)
+            loadPDFData()
         } catch {
             actions.showFailAlert(error.localizedDescription)
         }
@@ -165,8 +167,12 @@ extension DefaultPDFDetailViewModel: PDFMemoViewControllerDelegate {
             return
         }
         
+        var newPDFData = pdfData
+        newPDFData.memo[noteIndex] = text
+        
         do {
-            try useCase.storePDFMemo(pdfData: pdfData, text: text, index: noteIndex)
+            try repository.updatePDFEntity(pdfData: newPDFData)
+            loadPDFData()
         } catch {
             actions.showFailAlert(error.localizedDescription)
         }
