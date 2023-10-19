@@ -14,7 +14,6 @@ struct PDFListViewModelAction {
 }
 
 protocol PDFListViewModelInput {
-    func viewDidLoad()
     func tapAddButton()
     func deleteItem(at index: Int)
     func selectItem(at index: Int)
@@ -55,9 +54,7 @@ extension DefaultPDFListViewModel {
 }
 
 // MARK: - INPUT View event methods
-extension DefaultPDFListViewModel {
-    func viewDidLoad() { }
-    
+extension DefaultPDFListViewModel {    
     func tapAddButton() {
         let alert = UIAlertController(title: "Load PDF", message: "Enter the URL to load the PDF.", preferredStyle: .alert)
         alert.addTextField { textField in

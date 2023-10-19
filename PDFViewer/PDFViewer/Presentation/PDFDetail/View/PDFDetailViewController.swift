@@ -42,7 +42,6 @@ final class PDFDetailViewController: UIViewController {
         
         configureUI()
         setupBindings()
-        viewModel.viewDidLoad()
     }
     
     override func viewWillAppear(_ animated: Bool) {
