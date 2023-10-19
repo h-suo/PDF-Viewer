@@ -68,7 +68,6 @@ extension PDFListViewController {
     private func configureCollectionView() {
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: makeCollectionViewLayout())
         collectionView?.translatesAutoresizingMaskIntoConstraints = false
-        collectionView?.register(PDFListCell.self, forCellWithReuseIdentifier: PDFListCell.identifier)
         collectionView?.delegate = self
     }
 }
