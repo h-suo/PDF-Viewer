@@ -10,10 +10,12 @@ import Foundation
 protocol PDFListViewModelInput {
     func storePDF(title: String, urlString: String) throws
     func deletePDF(at index: Int) throws
+    func searchPDF(_ text: String)
 }
 
 protocol PDFListViewModelOutput {
     var pdfDatasPublisher: Published<[PDFData]>.Publisher { get }
+    var searchPDFDatasPublisher: Published<[PDFData]>.Publisher { get }
 }
 
 typealias PDFListViewModel = PDFListViewModelInput & PDFListViewModelOutput
@@ -23,6 +25,7 @@ final class DefaultPDFListViewModel: PDFListViewModel {
     // MARK: - Private Property
     private let repository: RealmRepository
     @Published private var pdfDatas: [PDFData] = []
+    @Published private var searchPDFDatas: [PDFData] = []
     
     // MARK: - Life Cycle
     init(repository: RealmRepository) {
@@ -33,6 +36,7 @@ final class DefaultPDFListViewModel: PDFListViewModel {
     
     // MARK: - OUTPUT
     var pdfDatasPublisher: Published<[PDFData]>.Publisher { $pdfDatas }
+    var searchPDFDatasPublisher: Published<[PDFData]>.Publisher { $searchPDFDatas }
 }
 
 // MARK: - Load Data
@@ -43,7 +47,7 @@ extension DefaultPDFListViewModel {
 }
 
 // MARK: - INPUT View event methods
-extension DefaultPDFListViewModel {    
+extension DefaultPDFListViewModel {
     func storePDF(title: String, urlString: String) throws {
         if title == "" || urlString == "" {
             return
@@ -62,5 +66,9 @@ extension DefaultPDFListViewModel {
         
         try repository.deletePDFEntity(pdfData: deletePDFData)
         loadPDFData()
+    }
+    
+    func searchPDF(_ text: String) {
+        searchPDFDatas = pdfDatas.filter { $0.title.lowercased().hasPrefix(text) }
     }
 }

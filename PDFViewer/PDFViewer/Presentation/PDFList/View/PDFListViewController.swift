@@ -34,6 +34,7 @@ final class PDFListViewController: UIViewController {
         
         configureCollectionView()
         configureDataSource()
+        configureSearchController()
         configureUI()
         setupBindings()
     }
@@ -93,6 +94,13 @@ extension PDFListViewController {
         collectionView?.translatesAutoresizingMaskIntoConstraints = false
         collectionView?.delegate = self
     }
+    
+    private func configureSearchController() {
+        let searchController = UISearchController(searchResultsController: nil)
+        searchController.searchResultsUpdater = self
+        navigationItem.searchController = searchController
+        navigationItem.hidesSearchBarWhenScrolling = false
+    }
 }
 
 // MARK: - CollectionView DataSource
@@ -149,6 +157,20 @@ extension PDFListViewController: UICollectionViewDelegate {
         }
         
         return UISwipeActionsConfiguration(actions: [deleteAction])
+    }
+}
+
+extension PDFListViewController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        guard let text = searchController.searchBar.text?.lowercased() else {
+            return
+        }
+        
+        viewModel.searchPDF(text)
+        
+        viewModel.searchPDFDatasPublisher.sink { pdfDatas in
+            self.loadCollectionView(pdfDatas)
+        }.store(in: &cancellables)
     }
 }
 
