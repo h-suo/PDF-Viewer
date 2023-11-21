@@ -39,15 +39,16 @@ final class PDFListViewController: UIViewController {
     }
     
     @objc private func tapAddButton() {
-        let alert = UIAlertController(title: "Load PDF", message: "Enter the URL to load the PDF.", preferredStyle: .alert)
-        alert.addTextField { textField in
-            textField.placeholder = "Enter the Title"
-        }
-        alert.addTextField { textField in
-            textField.placeholder = "Enter the URL"
-        }
-        
         let cancelAction = UIAlertAction(title: "cancel", style: .cancel)
+        let alert = AlertManager()
+            .setTitle("Load PDF")
+            .setMessage("Enter the URL to load the PDF.")
+            .setStyle(.alert)
+            .setAction(cancelAction)
+            .setTextField("Enter the Title")
+            .setTextField("Enter the URL")
+            .buildAlert()
+        
         let addAction = UIAlertAction(title: "Add", style: .default) { [weak self] _ in
             guard let self,
                   let title = alert.textFields?[0].text,
@@ -63,9 +64,7 @@ final class PDFListViewController: UIViewController {
             }
         }
         
-        [cancelAction, addAction].forEach {
-            alert.addAction($0)
-        }
+        alert.addAction(addAction)
         
         present(alert, animated: true)
     }
@@ -74,11 +73,7 @@ final class PDFListViewController: UIViewController {
 // MARK: - Data Binding
 extension PDFListViewController {
     private func setupBindings() {
-        viewModel.pdfDatasPublisher.sink { [weak self] pdfDatas in
-            guard let self else {
-                return
-            }
-            
+        viewModel.pdfDatasPublisher.sink { pdfDatas in
             self.loadCollectionView(pdfDatas)
         }.store(in: &cancellables)
     }
@@ -121,7 +116,7 @@ extension PDFListViewController {
         snapShot.appendSections([.main])
         snapShot.appendItems(pdfDatas)
         
-        self.dataSource?.apply(snapShot)
+        dataSource?.apply(snapShot)
     }
 }
 

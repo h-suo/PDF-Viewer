@@ -9,9 +9,9 @@ import UIKit
 
 extension UIViewController {
     func presentFailAlert(message: String) {
-        let alert = UIAlertController(title: "Failure", message: message, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "Yes", style: .cancel)
-        alert.addAction(okAction)
+        let alert = AlertManager
+            .failAlert(message)
+            .buildAlert()
         
         self.present(alert, animated: true)
     }

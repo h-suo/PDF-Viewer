@@ -73,7 +73,7 @@ final class PDFDetailViewController: UIViewController {
         do {
             try viewModel.addBookmark(at: currentIndex)
         } catch {
-            self.presentFailAlert(message: error.localizedDescription)
+            presentFailAlert(message: error.localizedDescription)
         }
     }
     
@@ -86,7 +86,7 @@ final class PDFDetailViewController: UIViewController {
         do {
             try viewModel.addBookmark(at: currentIndex)
         } catch {
-            self.presentFailAlert(message: error.localizedDescription)
+            presentFailAlert(message: error.localizedDescription)
         }
     }
     
@@ -95,13 +95,16 @@ final class PDFDetailViewController: UIViewController {
             return
         }
         
-        let alert = UIAlertController(title: "bookmark", message: "", preferredStyle: .actionSheet)
         let cancelAction = UIAlertAction(title: "cancel", style: .cancel)
+        let alert = AlertManager()
+            .setTitle("bookmark")
+            .setStyle(.actionSheet)
+            .setAction(cancelAction)
+            .buildAlert()
         
         bookmarkIndexs.forEach { index in
-            let action = UIAlertAction(title: "page \(index + 1)", style: .default) { [weak self] _ in
-                guard let self,
-                      let page = self.pdfView.document?.page(at: index) else {
+            let action = UIAlertAction(title: "page \(index + 1)", style: .default) { _ in
+                guard let page = self.pdfView.document?.page(at: index) else {
                     return
                 }
                 
@@ -110,9 +113,7 @@ final class PDFDetailViewController: UIViewController {
             
             alert.addAction(action)
         }
-        
-        alert.addAction(cancelAction)
-        
+                
         present(alert, animated: true)
     }
     
@@ -133,11 +134,7 @@ final class PDFDetailViewController: UIViewController {
 // MARK: - Data Binding
 extension PDFDetailViewController {
     private func setupBindings() {
-        viewModel.pdfDocumentPublisher.sink { [weak self] pdfDocument in
-            guard let self else {
-                return
-            }
-            
+        viewModel.pdfDocumentPublisher.sink { pdfDocument in
             self.configurePDFView(pdfDocument: pdfDocument)
         }.store(in: &cancellables)
     }

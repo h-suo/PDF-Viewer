@@ -17,9 +17,9 @@
 		4582B8992AD56D6E00AF5EF4 /* PDFData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4582B8982AD56D6E00AF5EF4 /* PDFData.swift */; };
 		4582B8A02AD5707C00AF5EF4 /* PDFListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4582B89F2AD5707C00AF5EF4 /* PDFListViewModel.swift */; };
 		4582B8A32AD639A200AF5EF4 /* DIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4582B8A22AD639A200AF5EF4 /* DIContainer.swift */; };
-		4582B8A62AD66D0A00AF5EF4 /* UseCaseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4582B8A52AD66D0A00AF5EF4 /* UseCaseError.swift */; };
 		4582B8AA2AD688A400AF5EF4 /* UIViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4582B8A92AD688A400AF5EF4 /* UIViewController+.swift */; };
 		4582B8AC2AD68F5300AF5EF4 /* PDFDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4582B8AB2AD68F5300AF5EF4 /* PDFDetailViewModel.swift */; };
+		45ADA9042B0C7A3D00626473 /* AlertManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45ADA9032B0C7A3D00626473 /* AlertManager.swift */; };
 		45B70FAC2ADCB91300441C4C /* PDFMemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B70FAB2ADCB91300441C4C /* PDFMemoViewController.swift */; };
 		45B70FAE2ADCBF0100441C4C /* UITextView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B70FAD2ADCBF0100441C4C /* UITextView+.swift */; };
 		45CD1B7D2ADD25AE002DEC57 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 45CD1B7C2ADD25AE002DEC57 /* RealmSwift */; };
@@ -43,9 +43,9 @@
 		4582B8982AD56D6E00AF5EF4 /* PDFData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFData.swift; sourceTree = "<group>"; };
 		4582B89F2AD5707C00AF5EF4 /* PDFListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFListViewModel.swift; sourceTree = "<group>"; };
 		4582B8A22AD639A200AF5EF4 /* DIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIContainer.swift; sourceTree = "<group>"; };
-		4582B8A52AD66D0A00AF5EF4 /* UseCaseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UseCaseError.swift; sourceTree = "<group>"; };
 		4582B8A92AD688A400AF5EF4 /* UIViewController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+.swift"; sourceTree = "<group>"; };
 		4582B8AB2AD68F5300AF5EF4 /* PDFDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFDetailViewModel.swift; sourceTree = "<group>"; };
+		45ADA9032B0C7A3D00626473 /* AlertManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertManager.swift; sourceTree = "<group>"; };
 		45B70FAB2ADCB91300441C4C /* PDFMemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFMemoViewController.swift; sourceTree = "<group>"; };
 		45B70FAD2ADCBF0100441C4C /* UITextView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+.swift"; sourceTree = "<group>"; };
 		45CD1B802ADD4458002DEC57 /* RealmRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmRepository.swift; sourceTree = "<group>"; };
@@ -205,7 +205,6 @@
 		4582B8A42AD66CE400AF5EF4 /* Error */ = {
 			isa = PBXGroup;
 			children = (
-				4582B8A52AD66D0A00AF5EF4 /* UseCaseError.swift */,
 				45CD1B842ADD5679002DEC57 /* RepositoryError.swift */,
 			);
 			path = Error;
@@ -214,6 +213,7 @@
 		4582B8A72AD6888000AF5EF4 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				45ADA9022B0C7A2700626473 /* Manager */,
 				4582B8A82AD6889100AF5EF4 /* Extensions */,
 			);
 			path = Utils;
@@ -226,6 +226,14 @@
 				45B70FAD2ADCBF0100441C4C /* UITextView+.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		45ADA9022B0C7A2700626473 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				45ADA9032B0C7A3D00626473 /* AlertManager.swift */,
+			);
+			path = Manager;
 			sourceTree = "<group>";
 		};
 		45CD1B7E2ADD43E9002DEC57 /* Data */ = {
@@ -362,8 +370,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				4582B8992AD56D6E00AF5EF4 /* PDFData.swift in Sources */,
+				45ADA9042B0C7A3D00626473 /* AlertManager.swift in Sources */,
 				45CD1B832ADD55F4002DEC57 /* PDFDTO.swift in Sources */,
-				4582B8A62AD66D0A00AF5EF4 /* UseCaseError.swift in Sources */,
 				4582B8A32AD639A200AF5EF4 /* DIContainer.swift in Sources */,
 				4582B8952AD53A6400AF5EF4 /* PDFDetailViewController.swift in Sources */,
 				4582B8AC2AD68F5300AF5EF4 /* PDFDetailViewModel.swift in Sources */,
