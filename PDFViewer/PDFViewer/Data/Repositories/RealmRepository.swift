@@ -5,10 +5,10 @@
 //  Created by Erick on 2023/10/16.
 //
 
+import Foundation
 import RealmSwift
-import PDFKit
 
-class RealmRepository {
+final class RealmRepository: Repository {
     
     // MARK: - Static Property
     static let shared = RealmRepository()
@@ -22,30 +22,30 @@ class RealmRepository {
     }
     
     // MARK: - CRUD Function
-    func readAllPDFEntities() -> [PDFData] {
+    func readAllPDFDatas() -> [PDFData] {
         let objects = realm.objects(PDFDTO.self)
         let pdfDTOs = Array(objects)
         
         return pdfDTOs.compactMap {
-            PDFDataTranslater.convertToPDFData(pdfDTO: $0)
+            RealmTranslater.convertToPDFData(pdfDTO: $0)
         }
     }
 
-    func readPDFEntity(withID id: UUID) -> PDFData? {
+    func readPDFData(with id: UUID) -> PDFData? {
         guard let pdfDTO = realm.object(ofType: PDFDTO.self, forPrimaryKey: id) else {
             return nil
         }
         
-        return PDFDataTranslater.convertToPDFData(pdfDTO: pdfDTO)
+        return RealmTranslater.convertToPDFData(pdfDTO: pdfDTO)
     }
     
-    func createPDFEntity(title: String, url: URL) throws {
+    func createPDFData(title: String, url: URL) throws {
         guard url.absoluteString.hasSuffix("pdf") else {
             throw RepositoryError.invalidURL
         }
         
         let pdfData = PDFData(title: title, url: url)
-        let pdfDTO = PDFDataTranslater.convertToPDFDTO(pdfData: pdfData)
+        let pdfDTO = RealmTranslater.convertToPDFDTO(pdfData: pdfData)
         
         do {
             try realm.write {
@@ -56,8 +56,8 @@ class RealmRepository {
         }
     }
 
-    func updatePDFEntity(pdfData: PDFData) throws {
-        let pdfDTO = PDFDataTranslater.convertToPDFDTO(pdfData: pdfData)
+    func updatePDFData(pdfData: PDFData) throws {
+        let pdfDTO = RealmTranslater.convertToPDFDTO(pdfData: pdfData)
         
         do {
             try realm.write {
@@ -68,8 +68,8 @@ class RealmRepository {
         }
     }
 
-    func deletePDFEntity(pdfData: PDFData) throws {
-        let pdfDTO = PDFDataTranslater.convertToPDFDTO(pdfData: pdfData)
+    func deletePDFData(pdfData: PDFData) throws {
+        let pdfDTO = RealmTranslater.convertToPDFDTO(pdfData: pdfData)
         
         do {
             try realm.write {

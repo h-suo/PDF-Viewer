@@ -8,7 +8,7 @@
 import Foundation
 import RealmSwift
 
-class PDFDTO: Object {
+final class PDFDTO: Object {
     @Persisted(primaryKey: true) var id: UUID
     @Persisted var title: String
     @Persisted var url: String
@@ -29,12 +29,12 @@ class PDFDTO: Object {
     }
 }
 
-class IntBoolPair: Object {
+final class IntBoolPair: Object {
     @Persisted var key: Int
     @Persisted var value: Bool
 }
 
-class IntStringPair: Object {
+final class IntStringPair: Object {
     @Persisted var key: Int
     @Persisted var value: String
 }

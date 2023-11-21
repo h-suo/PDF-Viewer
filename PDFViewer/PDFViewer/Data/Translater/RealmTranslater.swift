@@ -8,7 +8,7 @@
 import Foundation
 import RealmSwift
 
-class PDFDataTranslater {
+final class RealmTranslater {
     static func convertToPDFDTO(pdfData: PDFData) -> PDFDTO {
         let pdfDTO = PDFDTO()
         pdfDTO.id = pdfData.id

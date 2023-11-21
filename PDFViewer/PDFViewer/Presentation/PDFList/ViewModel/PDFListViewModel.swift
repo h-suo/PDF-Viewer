@@ -23,12 +23,12 @@ typealias PDFListViewModel = PDFListViewModelInput & PDFListViewModelOutput
 final class DefaultPDFListViewModel: PDFListViewModel {
     
     // MARK: - Private Property
-    private let repository: RealmRepository
+    private let repository: Repository
     @Published private var pdfDatas: [PDFData] = []
     @Published private var searchPDFDatas: [PDFData] = []
     
     // MARK: - Life Cycle
-    init(repository: RealmRepository) {
+    init(repository: Repository) {
         self.repository = repository
         
         loadPDFData()
@@ -42,7 +42,7 @@ final class DefaultPDFListViewModel: PDFListViewModel {
 // MARK: - Load Data
 extension DefaultPDFListViewModel {
     private func loadPDFData() {
-        pdfDatas = repository.readAllPDFEntities()
+        pdfDatas = repository.readAllPDFDatas()
     }
 }
 
@@ -57,14 +57,14 @@ extension DefaultPDFListViewModel {
             return
         }
         
-        try repository.createPDFEntity(title: title, url: url)
+        try repository.createPDFData(title: title, url: url)
         loadPDFData()
     }
     
     func deletePDF(at index: Int) throws {
         let deletePDFData = pdfDatas[index]
         
-        try repository.deletePDFEntity(pdfData: deletePDFData)
+        try repository.deletePDFData(pdfData: deletePDFData)
         loadPDFData()
     }
     

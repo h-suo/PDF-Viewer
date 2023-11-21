@@ -25,13 +25,13 @@ typealias PDFDetailViewModel = PDFDetailViewModelInput & PDFDetailViewModelOutpu
 final class DefaultPDFDetailViewModel: PDFDetailViewModel {
     
     // MARK: - Private Property
-    private let repository: RealmRepository
+    private let repository: Repository
     private let index: Int
     private var pdfData: PDFData?
     @Published private var pdfDocument: PDFDocument?
     
     // MARK: - Life Cycle
-    init(repository: RealmRepository,
+    init(repository: Repository,
          index: Int
     ) {
         self.repository = repository
@@ -47,7 +47,7 @@ final class DefaultPDFDetailViewModel: PDFDetailViewModel {
 // MARK: - Load Data
 extension DefaultPDFDetailViewModel {
     private func loadPDFData() {
-        let pdfDatas = repository.readAllPDFEntities()
+        let pdfDatas = repository.readAllPDFDatas()
         pdfData = pdfDatas[index]
         
         if pdfDocument == nil {
@@ -76,7 +76,7 @@ extension DefaultPDFDetailViewModel {
         var newPDFData = pdfData
         newPDFData.bookMark[index] = true
         
-        try repository.updatePDFEntity(pdfData: newPDFData)
+        try repository.updatePDFData(pdfData: newPDFData)
         loadPDFData()
     }
     
@@ -88,7 +88,7 @@ extension DefaultPDFDetailViewModel {
         var newPDFData = pdfData
         newPDFData.bookMark[index] = false
         
-        try repository.updatePDFEntity(pdfData: newPDFData)
+        try repository.updatePDFData(pdfData: newPDFData)
         loadPDFData()
     }
     
@@ -110,7 +110,7 @@ extension DefaultPDFDetailViewModel {
         var newPDFData = pdfData
         newPDFData.memo[index] = text
         
-        try repository.updatePDFEntity(pdfData: newPDFData)
+        try repository.updatePDFData(pdfData: newPDFData)
         loadPDFData()
     }
     

@@ -20,13 +20,14 @@
 		4582B8AA2AD688A400AF5EF4 /* UIViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4582B8A92AD688A400AF5EF4 /* UIViewController+.swift */; };
 		4582B8AC2AD68F5300AF5EF4 /* PDFDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4582B8AB2AD68F5300AF5EF4 /* PDFDetailViewModel.swift */; };
 		45ADA9042B0C7A3D00626473 /* AlertManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45ADA9032B0C7A3D00626473 /* AlertManager.swift */; };
+		45ADA92E2B0CD99900626473 /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45ADA92D2B0CD99900626473 /* Repository.swift */; };
 		45B70FAC2ADCB91300441C4C /* PDFMemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B70FAB2ADCB91300441C4C /* PDFMemoViewController.swift */; };
 		45B70FAE2ADCBF0100441C4C /* UITextView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B70FAD2ADCBF0100441C4C /* UITextView+.swift */; };
 		45CD1B7D2ADD25AE002DEC57 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 45CD1B7C2ADD25AE002DEC57 /* RealmSwift */; };
 		45CD1B812ADD4458002DEC57 /* RealmRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CD1B802ADD4458002DEC57 /* RealmRepository.swift */; };
 		45CD1B832ADD55F4002DEC57 /* PDFDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CD1B822ADD55F4002DEC57 /* PDFDTO.swift */; };
 		45CD1B852ADD5679002DEC57 /* RepositoryError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CD1B842ADD5679002DEC57 /* RepositoryError.swift */; };
-		45CD1B892ADD576F002DEC57 /* PDFDataTranslater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CD1B882ADD576F002DEC57 /* PDFDataTranslater.swift */; };
+		45CD1B892ADD576F002DEC57 /* RealmTranslater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CD1B882ADD576F002DEC57 /* RealmTranslater.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,12 +47,13 @@
 		4582B8A92AD688A400AF5EF4 /* UIViewController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+.swift"; sourceTree = "<group>"; };
 		4582B8AB2AD68F5300AF5EF4 /* PDFDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFDetailViewModel.swift; sourceTree = "<group>"; };
 		45ADA9032B0C7A3D00626473 /* AlertManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertManager.swift; sourceTree = "<group>"; };
+		45ADA92D2B0CD99900626473 /* Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
 		45B70FAB2ADCB91300441C4C /* PDFMemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFMemoViewController.swift; sourceTree = "<group>"; };
 		45B70FAD2ADCBF0100441C4C /* UITextView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+.swift"; sourceTree = "<group>"; };
 		45CD1B802ADD4458002DEC57 /* RealmRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmRepository.swift; sourceTree = "<group>"; };
 		45CD1B822ADD55F4002DEC57 /* PDFDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFDTO.swift; sourceTree = "<group>"; };
 		45CD1B842ADD5679002DEC57 /* RepositoryError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryError.swift; sourceTree = "<group>"; };
-		45CD1B882ADD576F002DEC57 /* PDFDataTranslater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFDataTranslater.swift; sourceTree = "<group>"; };
+		45CD1B882ADD576F002DEC57 /* RealmTranslater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmTranslater.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -249,6 +251,7 @@
 		45CD1B7F2ADD443D002DEC57 /* Repositories */ = {
 			isa = PBXGroup;
 			children = (
+				45ADA92D2B0CD99900626473 /* Repository.swift */,
 				45CD1B802ADD4458002DEC57 /* RealmRepository.swift */,
 			);
 			path = Repositories;
@@ -265,7 +268,7 @@
 		45CD1B872ADD573E002DEC57 /* Translater */ = {
 			isa = PBXGroup;
 			children = (
-				45CD1B882ADD576F002DEC57 /* PDFDataTranslater.swift */,
+				45CD1B882ADD576F002DEC57 /* RealmTranslater.swift */,
 			);
 			path = Translater;
 			sourceTree = "<group>";
@@ -375,7 +378,7 @@
 				4582B8A32AD639A200AF5EF4 /* DIContainer.swift in Sources */,
 				4582B8952AD53A6400AF5EF4 /* PDFDetailViewController.swift in Sources */,
 				4582B8AC2AD68F5300AF5EF4 /* PDFDetailViewModel.swift in Sources */,
-				45CD1B892ADD576F002DEC57 /* PDFDataTranslater.swift in Sources */,
+				45CD1B892ADD576F002DEC57 /* RealmTranslater.swift in Sources */,
 				45CD1B812ADD4458002DEC57 /* RealmRepository.swift in Sources */,
 				4582B8AA2AD688A400AF5EF4 /* UIViewController+.swift in Sources */,
 				4513EDB82AD3C52100939A6E /* PDFListViewController.swift in Sources */,
@@ -386,6 +389,7 @@
 				4513EDD32AD3EC1300939A6E /* PDFListCell.swift in Sources */,
 				45CD1B852ADD5679002DEC57 /* RepositoryError.swift in Sources */,
 				4513EDB62AD3C52100939A6E /* SceneDelegate.swift in Sources */,
+				45ADA92E2B0CD99900626473 /* Repository.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
