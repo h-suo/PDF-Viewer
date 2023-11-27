@@ -12,7 +12,7 @@ import Combine
 final class PDFDetailViewController: UIViewController {
     
     // MARK: - Private Property
-    private var pdfView: PDFView = {
+    private let pdfView: PDFView = {
         let pdfView = PDFView()
         pdfView.translatesAutoresizingMaskIntoConstraints = false
         pdfView.autoScales = true
@@ -20,6 +20,13 @@ final class PDFDetailViewController: UIViewController {
         pdfView.displayDirection = .vertical
         
         return pdfView
+    }()
+    
+    private let pageNumberView: PageNumberView = {
+        let pageNumberView = PageNumberView()
+        pageNumberView.translatesAutoresizingMaskIntoConstraints = false
+        
+        return pageNumberView
     }()
     
     private var cancellables: [AnyCancellable] = []
@@ -58,10 +65,12 @@ final class PDFDetailViewController: UIViewController {
     
     @objc private func tapNextButton() {
         pdfView.goToNextPage(nil)
+        configurePageLabel()
     }
     
     @objc private func tapBackButton() {
         pdfView.goToPreviousPage(nil)
+        configurePageLabel()
     }
     
     private func addBookmark(_ action: UIAction) {
@@ -109,6 +118,7 @@ final class PDFDetailViewController: UIViewController {
                 }
                 
                 self.pdfView.go(to: page)
+                self.configurePageLabel()
             }
             
             alert.addAction(action)
@@ -145,6 +155,16 @@ extension PDFDetailViewController {
     private func configurePDFView(pdfDocument: PDFDocument?) {
         DispatchQueue.main.async {
             self.pdfView.document = pdfDocument
+            self.configurePageLabel()
+        }
+    }
+    
+    private func configurePageLabel() {
+        if let currentPage: PDFPage = pdfView.currentPage,
+           let pageIndex: Int = pdfView.document?.index(for: currentPage) {
+            
+            let pageNumberText = "\(pageIndex + 1) / \(pdfView.document?.pageCount ?? .zero)"
+            pageNumberView.configurePageNumber(pageNumberText)
         }
     }
 }
@@ -193,6 +213,7 @@ extension PDFDetailViewController {
     private func configureView() {
         view.backgroundColor = .systemBackground
         view.addSubview(pdfView)
+        pdfView.addSubview(pageNumberView)
     }
     
     private func configureLayout() {
@@ -203,6 +224,13 @@ extension PDFDetailViewController {
             pdfView.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor),
             pdfView.topAnchor.constraint(equalTo: safeArea.topAnchor),
             pdfView.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor)
+        ])
+        
+        NSLayoutConstraint.activate([
+            pageNumberView.centerXAnchor.constraint(equalTo: pdfView.centerXAnchor),
+            pageNumberView.widthAnchor.constraint(greaterThanOrEqualTo: pdfView.widthAnchor, multiplier: 0.1),
+            pageNumberView.heightAnchor.constraint(equalTo: pageNumberView.widthAnchor, multiplier: 0.5),
+            pageNumberView.bottomAnchor.constraint(equalTo: pdfView.bottomAnchor, constant: -8)
         ])
     }
 }
