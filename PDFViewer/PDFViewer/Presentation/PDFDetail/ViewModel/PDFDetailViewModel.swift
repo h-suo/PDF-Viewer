@@ -8,9 +8,9 @@
 import PDFKit
 
 protocol PDFDetailViewModelInput {
-    func addBookmark(at index: Int) throws
-    func deleteBookmark(at index: Int) throws
-    func bookMarks() -> [Int]?
+    func updateBookmark(at index: Int) throws
+    func checkBookmark(at index: Int) -> Bool
+    func bookmarks() -> [Int]?
     
     func storeMemo(text: String, index: Int) throws
     func memo(at index: Int) -> String
@@ -68,31 +68,24 @@ extension DefaultPDFDetailViewModel {
 
 // MARK: - INPUT View event methods
 extension DefaultPDFDetailViewModel {
-    func addBookmark(at index: Int) throws {
+    func updateBookmark(at index: Int) throws {
         guard let pdfData else {
             return
         }
         
         var newPDFData = pdfData
-        newPDFData.bookMark[index] = true
+        let isBookMark = newPDFData.bookMark[index, default: false]
+        newPDFData.bookMark[index] = isBookMark ? false : true
         
         try repository.updatePDFData(pdfData: newPDFData)
         loadPDFData()
     }
     
-    func deleteBookmark(at index: Int) throws {
-        guard let pdfData else {
-            return
-        }
-        
-        var newPDFData = pdfData
-        newPDFData.bookMark[index] = false
-        
-        try repository.updatePDFData(pdfData: newPDFData)
-        loadPDFData()
+    func checkBookmark(at index: Int) -> Bool {
+        return pdfData?.bookMark[index] ?? false
     }
     
-    func bookMarks() -> [Int]? {
+    func bookmarks() -> [Int]? {
         guard let pdfData else {
             return nil
         }

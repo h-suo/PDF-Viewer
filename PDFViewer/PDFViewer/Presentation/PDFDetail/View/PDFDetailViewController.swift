@@ -66,41 +66,31 @@ final class PDFDetailViewController: UIViewController {
     @objc private func tapNextButton() {
         pdfView.goToNextPage(nil)
         configurePageLabel()
+        checkBookmark()
     }
     
     @objc private func tapBackButton() {
         pdfView.goToPreviousPage(nil)
         configurePageLabel()
+        checkBookmark()
     }
     
-    private func addBookmark(_ action: UIAction) {
+    private func updateBookmark(_ action: UIAction) {
         guard let currentPage = pdfView.currentPage,
               let currentIndex = pdfView.document?.index(for: currentPage) else {
             return
         }
         
         do {
-            try viewModel.addBookmark(at: currentIndex)
-        } catch {
-            presentFailAlert(message: error.localizedDescription)
-        }
-    }
-    
-    private func deleteBookmark(_ action: UIAction) {
-        guard let currentPage = pdfView.currentPage,
-              let currentIndex = pdfView.document?.index(for: currentPage) else {
-            return
-        }
-        
-        do {
-            try viewModel.addBookmark(at: currentIndex)
+            try viewModel.updateBookmark(at: currentIndex)
+            checkBookmark()
         } catch {
             presentFailAlert(message: error.localizedDescription)
         }
     }
     
     private func moveBookmark(_ action: UIAction) {
-        guard let bookmarkIndexs = viewModel.bookMarks() else {
+        guard let bookmarkIndexs = viewModel.bookmarks() else {
             return
         }
         
@@ -119,12 +109,23 @@ final class PDFDetailViewController: UIViewController {
                 
                 self.pdfView.go(to: page)
                 self.configurePageLabel()
+                self.checkBookmark()
             }
             
             alert.addAction(action)
         }
                 
         present(alert, animated: true)
+    }
+    
+    private func checkBookmark() {
+        guard let currentPage = pdfView.currentPage,
+              let currentIndex = pdfView.document?.index(for: currentPage) else {
+            return
+        }
+        
+        let isBookmark = viewModel.checkBookmark(at: currentIndex)
+        configureNavigation(isBookmark)
     }
     
     private func showMemoView(_ action: UIAction) {
@@ -156,6 +157,7 @@ extension PDFDetailViewController {
         DispatchQueue.main.async {
             self.pdfView.document = pdfDocument
             self.configurePageLabel()
+            self.checkBookmark()
         }
     }
     
@@ -182,18 +184,17 @@ extension PDFDetailViewController: PDFMemoViewControllerDelegate {
 // MARK: - Configure UI
 extension PDFDetailViewController {
     private func configureUI() {
-        configureNavigation()
+        configureNavigation(false)
         configureToolBar()
         configureView()
         configureLayout()
     }
     
-    private func configureNavigation() {
-        let addBookmarkAction = UIAction(title: "add bookmark", image: UIImage(systemName: "bookmark"), handler: addBookmark)
-        let deleteBookmarkAction = UIAction(title: "delete bookmark", image: UIImage(systemName: "bookmark.slash"), handler: deleteBookmark)
+    private func configureNavigation(_ isBookmark: Bool) {
+        let bookmarkAction = UIAction(title: "bookmark", image: UIImage(systemName: isBookmark ? "bookmark.fill" : "bookmark"), handler: updateBookmark)
         let moveBookmarkAction = UIAction(title: "move bookmark", image: UIImage(systemName: "book"), handler: moveBookmark)
         let memoAction = UIAction(title: "memo", image: UIImage(systemName: "note"), handler: showMemoView)
-        let bookmarkMenu = UIMenu(title: "bookmark", children: [addBookmarkAction, deleteBookmarkAction, moveBookmarkAction])
+        let bookmarkMenu = UIMenu(title: "bookmark", children: [bookmarkAction, moveBookmarkAction])
         
         let moreButton = UIBarButtonItem(image: UIImage(systemName: "ellipsis"), style: .plain, target: self, action: nil)
         moreButton.menu = UIMenu(children: [bookmarkMenu, memoAction])
