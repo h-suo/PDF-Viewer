@@ -128,6 +128,20 @@ final class PDFDetailViewController: UIViewController {
         configureNavigation(isBookmark)
     }
     
+    private func highlightAction(_ action: UIAction) {
+        guard let currentSelection = pdfView.currentSelection else { return }
+        let selections = currentSelection.selectionsByLine()
+        guard let page = selections.first?.pages.first else { return }
+        
+        selections.forEach { selection in
+            let highlight = PDFAnnotation(bounds: selection.bounds(for: page), forType: .highlight, withProperties: nil)
+            highlight.endLineStyle = .square
+            page.addAnnotation(highlight)
+        }
+        
+        pdfView.clearSelection()
+    }
+    
     private func showMemoView(_ action: UIAction) {
         guard let currentPage = pdfView.currentPage,
               let currentIndex = pdfView.document?.index(for: currentPage) else {
@@ -171,6 +185,7 @@ extension PDFDetailViewController {
     }
 }
 
+// MARK: - PDFMemoViewController Delegate
 extension PDFDetailViewController: PDFMemoViewControllerDelegate {
     func pdfMemoViewController(_ pdfMemoViewController: PDFMemoViewController, takeNotes text: String, noteIndex: Int) {
         do {
@@ -190,14 +205,18 @@ extension PDFDetailViewController {
         configureLayout()
     }
     
+    private func configureActions(_ isBookmark: Bool) -> [UIAction] {
+        return [
+            UIAction(title: "bookmark", image: UIImage(systemName: isBookmark ? "bookmark.fill" : "bookmark"), handler: updateBookmark),
+            UIAction(title: "move bookmark", image: UIImage(systemName: "book"), handler: moveBookmark),
+            UIAction(title: "highlight", image: UIImage(systemName: "highlighter"), handler: highlightAction),
+            UIAction(title: "memo", image: UIImage(systemName: "note"), handler: showMemoView)
+        ]
+    }
+    
     private func configureNavigation(_ isBookmark: Bool) {
-        let bookmarkAction = UIAction(title: "bookmark", image: UIImage(systemName: isBookmark ? "bookmark.fill" : "bookmark"), handler: updateBookmark)
-        let moveBookmarkAction = UIAction(title: "move bookmark", image: UIImage(systemName: "book"), handler: moveBookmark)
-        let memoAction = UIAction(title: "memo", image: UIImage(systemName: "note"), handler: showMemoView)
-        let bookmarkMenu = UIMenu(title: "bookmark", children: [bookmarkAction, moveBookmarkAction])
-        
         let moreButton = UIBarButtonItem(image: UIImage(systemName: "ellipsis"), style: .plain, target: self, action: nil)
-        moreButton.menu = UIMenu(children: [bookmarkMenu, memoAction])
+        moreButton.menu = UIMenu(children: configureActions(isBookmark))
         
         navigationItem.title = "PDF Detail"
         navigationItem.rightBarButtonItem = moreButton
