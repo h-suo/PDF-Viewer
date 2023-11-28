@@ -55,7 +55,6 @@ extension PageNumberView {
   
   private func configureView() {
     backgroundColor = .systemFill
-    
     addSubview(pageLabel)
   }
   

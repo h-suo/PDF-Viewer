@@ -27,11 +27,13 @@ final class RealmTranslater {
       return nil
     }
     
-    return PDFData(id: pdfDTO.id,
-                   title: pdfDTO.title,
-                   url: url,
-                   bookMark: convertToDictionary(list: pdfDTO.bookMark),
-                   memo: convertToDictionary(list: pdfDTO.memo))
+    return PDFData(
+      id: pdfDTO.id,
+      title: pdfDTO.title,
+      url: url,
+      bookMark: convertToDictionary(list: pdfDTO.bookMark),
+      memo: convertToDictionary(list: pdfDTO.memo)
+    )
   }
   
   static func convertToRealmList(bookmarks: [Int: Bool]) -> List<IntBoolPair> {

@@ -134,9 +134,11 @@ final class PDFDetailViewController: UIViewController {
     guard let page = selections.first?.pages.first else { return }
     
     selections.forEach { selection in
-      let highlight = PDFAnnotation(bounds: selection.bounds(for: page),
-                                    forType: .highlight,
-                                    withProperties: nil)
+      let highlight = PDFAnnotation(
+        bounds: selection.bounds(for: page),
+        forType: .highlight,
+        withProperties: nil
+      )
       highlight.endLineStyle = .square
       
       page.addAnnotation(highlight)
@@ -152,8 +154,10 @@ final class PDFDetailViewController: UIViewController {
     }
     
     let memo = viewModel.memo(at: currentIndex)
-    let memoViewController = DIContainer().makePDFMemoViewController(text: memo,
-                                                                     index: currentIndex)
+    let memoViewController = DIContainer().makePDFMemoViewController(
+      text: memo,
+      index: currentIndex
+    )
     memoViewController.delegate = self
     
     navigationController?.pushViewController(memoViewController, animated: true)
@@ -215,26 +219,36 @@ extension PDFDetailViewController {
   
   private func configureActions(_ isBookmark: Bool) -> [UIAction] {
     return [
-      UIAction(title: "bookmark",
-               image: UIImage(systemName: isBookmark ? "bookmark.fill" : "bookmark"),
-               handler: updateBookmark),
-      UIAction(title: "move bookmark",
-               image: UIImage(systemName: "book"),
-               handler: moveBookmark),
-      UIAction(title: "highlight",
-               image: UIImage(systemName: "highlighter"),
-               handler: highlightAction),
-      UIAction(title: "memo",
-               image: UIImage(systemName: "note"),
-               handler: showMemoView)
+      UIAction(
+        title: "bookmark",
+        image: UIImage(systemName: isBookmark ? "bookmark.fill" : "bookmark"),
+        handler: updateBookmark
+      ),
+      UIAction(
+        title: "move bookmark",
+        image: UIImage(systemName: "book"),
+        handler: moveBookmark
+      ),
+      UIAction(
+        title: "highlight",
+        image: UIImage(systemName: "highlighter"),
+        handler: highlightAction
+      ),
+      UIAction(
+        title: "memo",
+        image: UIImage(systemName: "note"),
+        handler: showMemoView
+      )
     ]
   }
   
   private func configureNavigation(_ isBookmark: Bool) {
-    let moreButton = UIBarButtonItem(image: UIImage(systemName: "ellipsis"),
-                                     style: .plain,
-                                     target: self,
-                                     action: nil)
+    let moreButton = UIBarButtonItem(
+      image: UIImage(systemName: "ellipsis"),
+      style: .plain,
+      target: self,
+      action: nil
+    )
     moreButton.menu = UIMenu(children: configureActions(isBookmark))
     
     navigationItem.rightBarButtonItem = moreButton
@@ -243,16 +257,22 @@ extension PDFDetailViewController {
   
   private func configureToolBar() {
     toolbarItems = [
-      UIBarButtonItem(image: UIImage(systemName: "chevron.left"),
-                      style: .plain, target: self,
-                      action: #selector(tapBackButton)),
-      UIBarButtonItem(barButtonSystemItem: .flexibleSpace,
-                      target: nil,
-                      action: nil),
-      UIBarButtonItem(image: UIImage(systemName: "chevron.right"),
-                      style: .plain,
-                      target: self,
-                      action: #selector(tapNextButton))
+      UIBarButtonItem(
+        image: UIImage(systemName: "chevron.left"),
+        style: .plain, target: self,
+        action: #selector(tapBackButton)
+      ),
+      UIBarButtonItem(
+        barButtonSystemItem: .flexibleSpace,
+        target: nil,
+        action: nil
+      ),
+      UIBarButtonItem(
+        image: UIImage(systemName: "chevron.right"),
+        style: .plain,
+        target: self,
+        action: #selector(tapNextButton)
+      )
     ]
   }
   
@@ -274,10 +294,14 @@ extension PDFDetailViewController {
     
     NSLayoutConstraint.activate([
       pageNumberView.centerXAnchor.constraint(equalTo: pdfView.centerXAnchor),
-      pageNumberView.widthAnchor.constraint(greaterThanOrEqualTo: pdfView.widthAnchor,
-                                            multiplier: 0.1),
-      pageNumberView.heightAnchor.constraint(equalTo: pageNumberView.widthAnchor,
-                                             multiplier: 0.5),
+      pageNumberView.widthAnchor.constraint(
+        greaterThanOrEqualTo: pdfView.widthAnchor,
+        multiplier: 0.1
+      ),
+      pageNumberView.heightAnchor.constraint(
+        equalTo: pageNumberView.widthAnchor,
+        multiplier: 0.5
+      ),
       pageNumberView.bottomAnchor.constraint(equalTo: pdfView.bottomAnchor, constant: -8)
     ])
   }

@@ -20,55 +20,69 @@ struct AlertManager {
 // MARK: - Setting Method
 extension AlertManager {
   func setTitle(_ text: String) -> AlertManager {
-    return AlertManager(title: text,
-                        message: message,
-                        style: style,
-                        actions: actions,
-                        placeholders: placeholders)
+    return AlertManager(
+      title: text,
+      message: message,
+      style: style,
+      actions: actions,
+      placeholders: placeholders
+    )
   }
   
   func setMessage(_ text: String) -> AlertManager {
-    return AlertManager(title: title,
-                        message: text,
-                        style: style,
-                        actions: actions,
-                        placeholders: placeholders)
+    return AlertManager(
+      title: title,
+      message: text,
+      style: style,
+      actions: actions,
+      placeholders: placeholders
+    )
   }
   
   func setStyle(_ alertStyle: UIAlertController.Style) -> AlertManager {
-    return AlertManager(title: title,
-                        message: message,
-                        style: alertStyle,
-                        actions: actions,
-                        placeholders: placeholders)
+    return AlertManager(
+      title: title,
+      message: message,
+      style: alertStyle,
+      actions: actions,
+      placeholders: placeholders
+    )
   }
   
   func setAction(_ alertAction: UIAlertAction) -> AlertManager {
     var newActions = actions
     newActions.append(alertAction)
-    return AlertManager(title: title,
-                        message: message,
-                        style: style,
-                        actions: newActions,
-                        placeholders: placeholders)
+    
+    return AlertManager(
+      title: title,
+      message: message,
+      style: style,
+      actions: newActions,
+      placeholders: placeholders
+    )
   }
   
   func setActions(_ alertActions: [UIAlertAction]) -> AlertManager {
-    return AlertManager(title: title,
-                        message: message,
-                        style: style,
-                        actions: actions + alertActions,
-                        placeholders: placeholders)
+    return AlertManager(
+      title: title,
+      message: message,
+      style: style,
+      actions: actions + alertActions,
+      placeholders: placeholders
+    )
   }
   
   func setTextField(_ placeholder: String?) -> AlertManager {
     var newPlaceholders = placeholders
     newPlaceholders.append(placeholder ?? "")
-    return AlertManager(title: title,
-                        message: message,
-                        style: style,
-                        actions: actions,
-                        placeholders: newPlaceholders)
+    
+    return AlertManager(
+      title: title,
+      message: message,
+      style: style,
+      actions: actions,
+      placeholders: newPlaceholders
+    )
   }
   
   func buildAlert() -> UIAlertController {
@@ -96,8 +110,10 @@ extension AlertManager {
   static func failAlert(_ message: String) -> AlertManager {
     let okAction = UIAlertAction(title: "Yes", style: .cancel)
     
-    return AlertManager(title: "Failure",
-                        message: message,
-                        actions: [okAction])
+    return AlertManager(
+      title: "Failure",
+      message: message,
+      actions: [okAction]
+    )
   }
 }

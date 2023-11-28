@@ -121,9 +121,11 @@ extension PDFListViewController {
     dataSource = UICollectionViewDiffableDataSource<Section, PDFData>(
       collectionView: collectionView,
       cellProvider: { collectionView, indexPath, item in
-        return collectionView.dequeueConfiguredReusableCell(using: cellResgistration,
-                                                            for: indexPath,
-                                                            item: item)
+        return collectionView.dequeueConfiguredReusableCell(
+          using: cellResgistration,
+          for: indexPath,
+          item: item
+        )
       }
     )
   }
@@ -199,9 +201,11 @@ extension PDFListViewController {
   }
   
   private func configureNavigation() {
-    let addButton = UIBarButtonItem(barButtonSystemItem: .add,
-                                    target: self,
-                                    action: #selector(tapAddButton))
+    let addButton = UIBarButtonItem(
+      barButtonSystemItem: .add,
+      target: self,
+      action: #selector(tapAddButton)
+    )
     
     navigationItem.rightBarButtonItem = addButton
     navigationItem.title = "PDF Viewer"

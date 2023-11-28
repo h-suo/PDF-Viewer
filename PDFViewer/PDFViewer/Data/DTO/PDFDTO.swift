@@ -15,10 +15,11 @@ final class PDFDTO: Object {
   @Persisted var bookMark: List<IntBoolPair>
   @Persisted var memo: List<IntStringPair>
   
-  convenience init(id: UUID = UUID(),
-                   title: String, url: String,
-                   bookMark: List<IntBoolPair> = List<IntBoolPair>(),
-                   memo: List<IntStringPair> = List<IntStringPair>()
+  convenience init(
+    id: UUID = UUID(),
+    title: String, url: String,
+    bookMark: List<IntBoolPair> = List<IntBoolPair>(),
+    memo: List<IntStringPair> = List<IntStringPair>()
   ) {
     self.init()
     self.id = id

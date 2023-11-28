@@ -10,10 +10,12 @@ import UIKit
 extension UITextView {
   
   func addObserveKeyboardNotification() {
-    NotificationCenter.default.addObserver(self,
-                                           selector: #selector(keyboardWillShow(_:)),
-                                           name: UIResponder.keyboardWillShowNotification,
-                                           object: nil)
+    NotificationCenter.default.addObserver(
+      self,
+      selector: #selector(keyboardWillShow(_:)),
+      name: UIResponder.keyboardWillShowNotification,
+      object: nil
+    )
   }
   
   @objc private func keyboardWillShow(_ notification: Notification) {
@@ -21,10 +23,12 @@ extension UITextView {
       .userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
       let keyboardHeight = keyboardFrame.height
       
-      self.contentInset = UIEdgeInsets(top: .zero,
-                                       left: .zero,
-                                       bottom: keyboardHeight,
-                                       right: .zero)
+      self.contentInset = UIEdgeInsets(
+        top: .zero,
+        left: .zero,
+        bottom: keyboardHeight,
+        right: .zero
+      )
     }
   }
 }
