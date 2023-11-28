@@ -5,9 +5,9 @@
 //  Created by Erick on 2023/10/10.
 //
 
-import UIKit
-import PDFKit
 import Combine
+import PDFKit
+import UIKit
 
 final class PDFDetailViewController: UIViewController {
   
