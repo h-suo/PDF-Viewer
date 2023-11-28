@@ -12,6 +12,9 @@ protocol PDFDetailViewModelInput {
   func checkBookmark(at index: Int) -> Bool
   func bookmarks() -> [Int]?
   
+  func updateHighlight(textList: [String], index: Int) throws
+  func highlight(at index: Int) -> [String]
+  
   func storeMemo(text: String, index: Int) throws
   func memo(at index: Int) -> String
 }
@@ -94,6 +97,25 @@ extension DefaultPDFDetailViewModel {
     let bookmarkIndexs = pdfData.bookMark.filter { $0.value == true }
     
     return Array(bookmarkIndexs.keys)
+  }
+  
+  func updateHighlight(textList: [String], index: Int) throws {
+    guard let pdfData else {
+      return
+    }
+    
+    var newPDFData = pdfData
+    newPDFData.highlight[index] = textList.joined(separator: "\n")
+    
+    try repository.updatePDFData(pdfData: newPDFData)
+    loadPDFData()
+  }
+  
+  func highlight(at index: Int) -> [String] {
+    return pdfData?
+      .highlight[index]?
+      .split(separator: "\n")
+      .map { String($0) } ?? []
   }
   
   func storeMemo(text: String, index: Int) throws {

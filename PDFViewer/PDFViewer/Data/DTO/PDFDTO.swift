@@ -14,12 +14,14 @@ final class PDFDTO: Object {
   @Persisted var url: String
   @Persisted var bookMark: List<IntBoolPair>
   @Persisted var memo: List<IntStringPair>
+  @Persisted var highlight: List<IntStringPair>
   
   convenience init(
     id: UUID = UUID(),
     title: String, url: String,
     bookMark: List<IntBoolPair> = List<IntBoolPair>(),
-    memo: List<IntStringPair> = List<IntStringPair>()
+    memo: List<IntStringPair> = List<IntStringPair>(),
+    highlight: List<IntStringPair> = List<IntStringPair>()
   ) {
     self.init()
     self.id = id
@@ -27,6 +29,7 @@ final class PDFDTO: Object {
     self.url = url
     self.bookMark = bookMark
     self.memo = memo
+    self.highlight = highlight
   }
 }
 

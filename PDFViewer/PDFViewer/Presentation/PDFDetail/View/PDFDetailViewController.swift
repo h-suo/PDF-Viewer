@@ -67,17 +67,18 @@ final class PDFDetailViewController: UIViewController {
     pdfView.goToNextPage(nil)
     configurePageLabel()
     checkBookmark()
+    configureHighlight()
   }
   
   @objc private func tapBackButton() {
     pdfView.goToPreviousPage(nil)
     configurePageLabel()
     checkBookmark()
+    configureHighlight()
   }
   
   private func updateBookmark(_ action: UIAction) {
-    guard let currentPage = pdfView.currentPage,
-          let currentIndex = pdfView.document?.index(for: currentPage) else {
+    guard let currentIndex = currentIndex() else {
       return
     }
     
@@ -110,6 +111,7 @@ final class PDFDetailViewController: UIViewController {
         self.pdfView.go(to: page)
         self.configurePageLabel()
         self.checkBookmark()
+        self.configureHighlight()
       }
       
       alert.addAction(action)
@@ -119,19 +121,46 @@ final class PDFDetailViewController: UIViewController {
   }
   
   private func checkBookmark() {
-    guard let currentPage = pdfView.currentPage,
-          let currentIndex = pdfView.document?.index(for: currentPage) else {
+    guard let currentIndex = currentIndex() else {
       return
     }
     
     let isBookmark = viewModel.checkBookmark(at: currentIndex)
     configureNavigation(isBookmark)
+    configureHighlight()
   }
   
-  private func highlightAction(_ action: UIAction) {
-    guard let currentSelection = pdfView.currentSelection else { return }
+  private func updateHighlight(_ action: UIAction) {
+    guard let currentIndex = currentIndex(),
+          let currentSelection = pdfView.currentSelection else {
+      return
+    }
+    
     let selections = currentSelection.selectionsByLine()
-    guard let page = selections.first?.pages.first else { return }
+    let highlights = selections.compactMap { $0.string }
+    
+    do {
+      try viewModel.updateHighlight(textList: highlights, index: currentIndex)
+      configureHighlight()
+    } catch {
+      presentFailAlert(message: error.localizedDescription)
+    }
+    
+    pdfView.clearSelection()
+  }
+  
+  private func configureHighlight() {
+    guard let currentIndex = currentIndex() else {
+      return
+    }
+    
+    let selections = viewModel.highlight(at: currentIndex).compactMap {
+      pdfView.document?.findString($0, withOptions: .caseInsensitive).first
+    }
+    
+    guard let page = selections.first?.pages.first else {
+      return
+    }
     
     selections.forEach { selection in
       let highlight = PDFAnnotation(
@@ -143,13 +172,10 @@ final class PDFDetailViewController: UIViewController {
       
       page.addAnnotation(highlight)
     }
-    
-    pdfView.clearSelection()
   }
   
   private func showMemoView(_ action: UIAction) {
-    guard let currentPage = pdfView.currentPage,
-          let currentIndex = pdfView.document?.index(for: currentPage) else {
+    guard let currentIndex = currentIndex() else {
       return
     }
     
@@ -161,6 +187,15 @@ final class PDFDetailViewController: UIViewController {
     memoViewController.delegate = self
     
     navigationController?.pushViewController(memoViewController, animated: true)
+  }
+  
+  private func currentIndex() -> Int? {
+    guard let currentPage = pdfView.currentPage,
+          let currentIndex = pdfView.document?.index(for: currentPage) else {
+      return nil
+    }
+    
+    return currentIndex
   }
 }
 
@@ -180,6 +215,7 @@ extension PDFDetailViewController {
       self.pdfView.document = pdfDocument
       self.configurePageLabel()
       self.checkBookmark()
+      self.configureHighlight()
     }
   }
   
@@ -232,7 +268,7 @@ extension PDFDetailViewController {
       UIAction(
         title: "highlight",
         image: UIImage(systemName: "highlighter"),
-        handler: highlightAction
+        handler: updateHighlight
       ),
       UIAction(
         title: "memo",

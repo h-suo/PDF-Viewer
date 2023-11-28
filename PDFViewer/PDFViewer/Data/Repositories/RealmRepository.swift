@@ -27,7 +27,7 @@ final class RealmRepository: Repository {
     let pdfDTOs = Array(objects)
     
     return pdfDTOs.compactMap {
-      RealmTranslater.convertToPDFData(pdfDTO: $0)
+      RealmTranslater.convertToPDFData($0)
     }
   }
   
@@ -36,7 +36,7 @@ final class RealmRepository: Repository {
       return nil
     }
     
-    return RealmTranslater.convertToPDFData(pdfDTO: pdfDTO)
+    return RealmTranslater.convertToPDFData(pdfDTO)
   }
   
   func createPDFData(title: String, url: URL) throws {

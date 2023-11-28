@@ -15,14 +15,16 @@ final class RealmTranslater {
     pdfDTO.title = pdfData.title
     pdfDTO.url = pdfData.url.absoluteString
     pdfDTO.bookMark.removeAll()
-    pdfDTO.bookMark.append(objectsIn: convertToRealmList(bookmarks: pdfData.bookMark))
+    pdfDTO.bookMark.append(objectsIn: convertToRealmList(pdfData.bookMark))
     pdfDTO.memo.removeAll()
-    pdfDTO.memo.append(objectsIn: convertToRealmList(memo: pdfData.memo))
+    pdfDTO.memo.append(objectsIn: convertToRealmList(pdfData.memo))
+    pdfDTO.highlight.removeAll()
+    pdfDTO.highlight.append(objectsIn: convertToRealmList(pdfData.highlight))
     
     return pdfDTO
   }
   
-  static func convertToPDFData(pdfDTO: PDFDTO) -> PDFData? {
+  static func convertToPDFData(_ pdfDTO: PDFDTO) -> PDFData? {
     guard let url = URL(string: pdfDTO.url) else {
       return nil
     }
@@ -31,15 +33,16 @@ final class RealmTranslater {
       id: pdfDTO.id,
       title: pdfDTO.title,
       url: url,
-      bookMark: convertToDictionary(list: pdfDTO.bookMark),
-      memo: convertToDictionary(list: pdfDTO.memo)
+      bookMark: convertToDictionary(pdfDTO.bookMark),
+      memo: convertToDictionary(pdfDTO.memo),
+      highlight: convertToDictionary(pdfDTO.highlight)
     )
   }
   
-  static func convertToRealmList(bookmarks: [Int: Bool]) -> List<IntBoolPair> {
+  static func convertToRealmList(_ dictionary: [Int: Bool]) -> List<IntBoolPair> {
     let list = List<IntBoolPair>()
     
-    for (key, value) in bookmarks {
+    for (key, value) in dictionary {
       let pair = IntBoolPair()
       pair.key = key
       pair.value = value
@@ -49,10 +52,10 @@ final class RealmTranslater {
     return list
   }
   
-  static func convertToRealmList(memo: [Int: String]) -> List<IntStringPair> {
+  static func convertToRealmList(_ dictionary: [Int: String]) -> List<IntStringPair> {
     let list = List<IntStringPair>()
     
-    for (key, value) in memo {
+    for (key, value) in dictionary {
       let pair = IntStringPair()
       pair.key = key
       pair.value = value
@@ -62,7 +65,7 @@ final class RealmTranslater {
     return list
   }
   
-  static func convertToDictionary(list: List<IntBoolPair>) -> [Int: Bool] {
+  static func convertToDictionary(_ list: List<IntBoolPair>) -> [Int: Bool] {
     var dictionary = [Int: Bool]()
     
     for pair in list {
@@ -72,7 +75,7 @@ final class RealmTranslater {
     return dictionary
   }
   
-  static func convertToDictionary(list: List<IntStringPair>) -> [Int: String] {
+  static func convertToDictionary(_ list: List<IntStringPair>) -> [Int: String] {
     var dictionary = [Int: String]()
     
     for pair in list {
