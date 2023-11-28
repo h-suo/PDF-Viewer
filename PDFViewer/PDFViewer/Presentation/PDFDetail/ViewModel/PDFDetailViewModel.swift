@@ -8,106 +8,107 @@
 import PDFKit
 
 protocol PDFDetailViewModelInput {
-    func updateBookmark(at index: Int) throws
-    func checkBookmark(at index: Int) -> Bool
-    func bookmarks() -> [Int]?
-    
-    func storeMemo(text: String, index: Int) throws
-    func memo(at index: Int) -> String
+  func updateBookmark(at index: Int) throws
+  func checkBookmark(at index: Int) -> Bool
+  func bookmarks() -> [Int]?
+  
+  func storeMemo(text: String, index: Int) throws
+  func memo(at index: Int) -> String
 }
 
 protocol PDFDetailViewModelOutput {
-    var pdfDocumentPublisher: Published<PDFDocument?>.Publisher { get }
+  var pdfDocumentPublisher: Published<PDFDocument?>.Publisher { get }
 }
 
 typealias PDFDetailViewModel = PDFDetailViewModelInput & PDFDetailViewModelOutput
 
 final class DefaultPDFDetailViewModel: PDFDetailViewModel {
+  
+  // MARK: - Private Property
+  private let repository: Repository
+  private let index: Int
+  private var pdfData: PDFData?
+  @Published private var pdfDocument: PDFDocument?
+  
+  // MARK: - Life Cycle
+  init(
+    repository: Repository,
+    index: Int
+  ) {
+    self.repository = repository
+    self.index = index
     
-    // MARK: - Private Property
-    private let repository: Repository
-    private let index: Int
-    private var pdfData: PDFData?
-    @Published private var pdfDocument: PDFDocument?
-    
-    // MARK: - Life Cycle
-    init(repository: Repository,
-         index: Int
-    ) {
-        self.repository = repository
-        self.index = index
-        
-        loadPDFData()
-    }
-    
-    // MARK: - OUTPUT
-    var pdfDocumentPublisher: Published<PDFDocument?>.Publisher { $pdfDocument }
+    loadPDFData()
+  }
+  
+  // MARK: - OUTPUT
+  var pdfDocumentPublisher: Published<PDFDocument?>.Publisher { $pdfDocument }
 }
 
 // MARK: - Load Data
 extension DefaultPDFDetailViewModel {
-    private func loadPDFData() {
-        let pdfDatas = repository.readAllPDFDatas()
-        pdfData = pdfDatas[index]
-        
-        if pdfDocument == nil {
-            Task {
-                await loadPDFDocument()
-            }
-        }
+  private func loadPDFData() {
+    let pdfDatas = repository.readAllPDFDatas()
+    pdfData = pdfDatas[index]
+    
+    if pdfDocument == nil {
+      Task {
+        await loadPDFDocument()
+      }
     }
-
-    private func loadPDFDocument() async {
-        guard let pdfURL = pdfData?.url else {
-            return
-        }
-        
-        pdfDocument = PDFDocument(url: pdfURL)
+  }
+  
+  private func loadPDFDocument() async {
+    guard let pdfURL = pdfData?.url else {
+      return
     }
+    
+    pdfDocument = PDFDocument(url: pdfURL)
+  }
 }
 
 // MARK: - INPUT View event methods
 extension DefaultPDFDetailViewModel {
-    func updateBookmark(at index: Int) throws {
-        guard let pdfData else {
-            return
-        }
-        
-        var newPDFData = pdfData
-        let isBookMark = newPDFData.bookMark[index, default: false]
-        newPDFData.bookMark[index] = isBookMark ? false : true
-        
-        try repository.updatePDFData(pdfData: newPDFData)
-        loadPDFData()
+  func updateBookmark(at index: Int) throws {
+    guard let pdfData else {
+      return
     }
     
-    func checkBookmark(at index: Int) -> Bool {
-        return pdfData?.bookMark[index] ?? false
+    var newPDFData = pdfData
+    let isBookMark = newPDFData.bookMark[index, default: false]
+    newPDFData.bookMark[index] = isBookMark ? false : true
+    
+    try repository.updatePDFData(pdfData: newPDFData)
+    loadPDFData()
+  }
+  
+  func checkBookmark(at index: Int) -> Bool {
+    return pdfData?.bookMark[index] ?? false
+  }
+  
+  func bookmarks() -> [Int]? {
+    guard let pdfData else {
+      return nil
     }
     
-    func bookmarks() -> [Int]? {
-        guard let pdfData else {
-            return nil
-        }
-        
-        let bookmarkIndexs = pdfData.bookMark.filter { $0.value == true }
-        
-        return Array(bookmarkIndexs.keys)
+    let bookmarkIndexs = pdfData.bookMark.filter { $0.value == true }
+    
+    return Array(bookmarkIndexs.keys)
+  }
+  
+  func storeMemo(text: String, index: Int) throws {
+    guard let pdfData else {
+      return
     }
     
-    func storeMemo(text: String, index: Int) throws {
-        guard let pdfData else {
-            return
-        }
-        
-        var newPDFData = pdfData
-        newPDFData.memo[index] = text
-        
-        try repository.updatePDFData(pdfData: newPDFData)
-        loadPDFData()
-    }
+    var newPDFData = pdfData
+    newPDFData.memo[index] = text
     
-    func memo(at index: Int) -> String {
-        return pdfData?.memo[index] ?? ""
-    }
+    try repository.updatePDFData(pdfData: newPDFData)
+    loadPDFData()
+  }
+  
+  func memo(at index: Int) -> String {
+    return pdfData?.memo[index] ?? ""
+  }
 }

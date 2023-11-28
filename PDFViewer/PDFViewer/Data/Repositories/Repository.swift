@@ -8,9 +8,9 @@
 import Foundation
 
 protocol Repository {
-    func readAllPDFDatas() -> [PDFData]
-    func readPDFData(with id: UUID) -> PDFData?
-    func createPDFData(title: String, url: URL) throws
-    func updatePDFData(pdfData: PDFData) throws
-    func deletePDFData(pdfData: PDFData) throws
+  func readAllPDFDatas() -> [PDFData]
+  func readPDFData(with id: UUID) -> PDFData?
+  func createPDFData(title: String, url: URL) throws
+  func updatePDFData(pdfData: PDFData) throws
+  func deletePDFData(pdfData: PDFData) throws
 }

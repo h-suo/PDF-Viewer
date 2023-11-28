@@ -77,7 +77,9 @@
 				4513EDB22AD3C52100939A6E /* PDFViewer */,
 				4513EDB12AD3C52100939A6E /* Products */,
 			);
+			indentWidth = 2;
 			sourceTree = "<group>";
+			tabWidth = 2;
 		};
 		4513EDB12AD3C52100939A6E /* Products */ = {
 			isa = PBXGroup;

@@ -8,11 +8,11 @@
 import UIKit
 
 extension UIViewController {
-    func presentFailAlert(message: String) {
-        let alert = AlertManager
-            .failAlert(message)
-            .buildAlert()
-        
-        self.present(alert, animated: true)
-    }
+  func presentFailAlert(message: String) {
+    let alert = AlertManager
+      .failAlert(message)
+      .buildAlert()
+    
+    self.present(alert, animated: true)
+  }
 }
