@@ -110,11 +110,11 @@ extension DefaultPDFDetailViewModel {
     var newPDFData = pdfData
     let isBookmark = newPDFData.bookMark[index, default: false]
     newPDFData.bookMark[index] = isBookmark ? false : true
-    self.isBookmark = isBookmark ? false : true
     
     try repository.updatePDFData(pdfData: newPDFData)
     loadPDFData()
     loadBookmarkIndexs()
+    updateCurrentPage(at: index)
   }
   
   func updateHighlight(textList: [String], index: Int) throws {
@@ -138,10 +138,10 @@ extension DefaultPDFDetailViewModel {
     }
     
     newPDFData.highlight[index] = highlights.joined(separator: String.enter)
-    self.highlights = highlights
     
     try repository.updatePDFData(pdfData: newPDFData)
     loadPDFData()
+    updateCurrentPage(at: index)
   }
   
   func updateMemo(text: String, index: Int) throws {
@@ -151,9 +151,9 @@ extension DefaultPDFDetailViewModel {
     
     var newPDFData = pdfData
     newPDFData.memo[index] = text
-    self.memo = text
     
     try repository.updatePDFData(pdfData: newPDFData)
     loadPDFData()
+    updateCurrentPage(at: index)
   }
 }
