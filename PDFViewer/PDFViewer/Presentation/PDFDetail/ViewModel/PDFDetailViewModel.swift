@@ -64,21 +64,18 @@ final class DefaultPDFDetailViewModel: PDFDetailViewModel {
 extension DefaultPDFDetailViewModel {
   private func loadPDFData() {
     let pdfDatas = repository.readAllPDFDatas()
+    let url = pdfDatas[index].url
     pdfData = pdfDatas[index]
     
     if pdfDocument == nil {
       Task {
-        await loadPDFDocument()
+        await loadPDFDocument(url)
       }
     }
   }
   
-  private func loadPDFDocument() async {
-    guard let pdfURL = pdfData?.url else {
-      return
-    }
-    
-    pdfDocument = PDFDocument(url: pdfURL)
+  private func loadPDFDocument(_ url: URL) async {
+    pdfDocument = PDFDocument(url: url)
   }
   
   private func loadBookmarkIndexs() {
