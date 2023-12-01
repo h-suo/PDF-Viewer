@@ -105,7 +105,21 @@ extension DefaultPDFDetailViewModel {
     }
     
     var newPDFData = pdfData
-    newPDFData.highlight[index] = textList.joined(separator: "\n")
+    var highlights = newPDFData
+      .highlight[index]?
+      .split(separator: "\n")
+      .map { String($0) } ?? []
+    
+    textList.forEach {
+      if highlights.contains($0) {
+        let index = highlights.firstIndex(of: $0)!
+        highlights.remove(at: index)
+      } else {
+        highlights.append($0)
+      }
+    }
+    
+    newPDFData.highlight[index] = highlights.joined(separator: "\n")
     
     try repository.updatePDFData(pdfData: newPDFData)
     loadPDFData()

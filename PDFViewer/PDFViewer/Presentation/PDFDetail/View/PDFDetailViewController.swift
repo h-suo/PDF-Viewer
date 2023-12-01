@@ -154,6 +154,10 @@ final class PDFDetailViewController: UIViewController {
       return
     }
     
+    pdfView.currentPage?.annotations.forEach {
+      pdfView.currentPage?.removeAnnotation($0)
+    }
+    
     let selections = viewModel.highlight(at: currentIndex).compactMap {
       pdfView.document?.findString($0, withOptions: .caseInsensitive).first
     }
