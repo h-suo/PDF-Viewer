@@ -29,12 +29,17 @@ final class PDFDetailViewController: UIViewController {
     return pageNumberView
   }()
   
-  private var cancellables: [AnyCancellable] = []
   private let viewModel: PDFDetailViewModel
+  private var cancellables: [AnyCancellable]
+  private var bookmarkIndexs: [Int]
+  private var memo: String
   
   // MARK: - Life Cycle
   init(viewModel: PDFDetailViewModel) {
     self.viewModel = viewModel
+    self.cancellables = []
+    self.bookmarkIndexs = []
+    self.memo = String.empty
     
     super.init(nibName: nil, bundle: nil)
   }
@@ -43,12 +48,15 @@ final class PDFDetailViewController: UIViewController {
     fatalError("init(coder:) has not been implemented")
   }
   
-  // MARK: - View Event
   override func viewDidLoad() {
     super.viewDidLoad()
     
     configureUI()
-    setupBindings()
+    bindingPDFDocument()
+    bindingBookmarkIndexs()
+    bindingIsBookmark()
+    bindingHighlights()
+    bindingMemo()
   }
   
   override func viewWillAppear(_ animated: Bool) {
@@ -63,20 +71,75 @@ final class PDFDetailViewController: UIViewController {
     navigationController?.isToolbarHidden = true
   }
   
+  private func currentIndex() -> Int? {
+    guard let currentPage = pdfView.currentPage,
+          let currentIndex = pdfView.document?.index(for: currentPage) else {
+      return nil
+    }
+    
+    return currentIndex
+  }
+}
+
+// MARK: - Data Binding
+extension PDFDetailViewController {
+  private func bindingPDFDocument() {
+    viewModel.pdfDocumentPublisher.sink { pdfDocument in
+      self.configurePDFView(pdfDocument: pdfDocument)
+    }.store(in: &cancellables)
+  }
+  
+  private func bindingBookmarkIndexs() {
+    viewModel.bookmarkIndexsPublisher.sink { bookmarkIndexs in
+      self.bookmarkIndexs = bookmarkIndexs
+    }.store(in: &cancellables)
+  }
+  
+  private func bindingIsBookmark() {
+    viewModel.isBookmarkPublisher.sink { isBookmark in
+      self.configureNavigation(isBookmark)
+    }.store(in: &cancellables)
+  }
+  
+  private func bindingHighlights() {
+    viewModel.highlightsPublisher.sink { highlights in
+      self.configureHighlight(highlights)
+    }.store(in: &cancellables)
+  }
+  
+  private func bindingMemo() {
+    viewModel.memoPublisher.sink { memo in
+      self.memo = memo
+    }.store(in: &cancellables)
+  }
+}
+
+// MARK: - View Event
+extension PDFDetailViewController {
+  
+  // MARK: - Update CurrentPage
+  @objc private func updateCurrentPage() {
+    guard let currentIndex = currentIndex() else {
+      return
+    }
+    
+    viewModel.updateCurrentPage(at: currentIndex)
+  }
+  
+  // MARK: - Move PDF Page
   @objc private func tapNextButton() {
     pdfView.goToNextPage(nil)
+    updateCurrentPage()
     configurePageLabel()
-    checkBookmark()
-    configureHighlight()
   }
   
   @objc private func tapBackButton() {
     pdfView.goToPreviousPage(nil)
+    updateCurrentPage()
     configurePageLabel()
-    checkBookmark()
-    configureHighlight()
   }
   
+  // MARK: - Bookmark
   private func updateBookmark(_ action: UIAction) {
     guard let currentIndex = currentIndex() else {
       return
@@ -84,17 +147,12 @@ final class PDFDetailViewController: UIViewController {
     
     do {
       try viewModel.updateBookmark(at: currentIndex)
-      checkBookmark()
     } catch {
       presentFailAlert(message: error.localizedDescription)
     }
   }
   
   private func moveBookmark(_ action: UIAction) {
-    guard let bookmarkIndexs = viewModel.bookmarks() else {
-      return
-    }
-    
     let cancelAction = UIAlertAction(title: NameSpace.cancel, style: .cancel)
     let alert = AlertManager()
       .setTitle(NameSpace.bookmark)
@@ -112,9 +170,8 @@ final class PDFDetailViewController: UIViewController {
           }
           
           self.pdfView.go(to: page)
+          self.updateCurrentPage()
           self.configurePageLabel()
-          self.checkBookmark()
-          self.configureHighlight()
         }
       )
       
@@ -124,16 +181,7 @@ final class PDFDetailViewController: UIViewController {
     present(alert, animated: true)
   }
   
-  private func checkBookmark() {
-    guard let currentIndex = currentIndex() else {
-      return
-    }
-    
-    let isBookmark = viewModel.checkBookmark(at: currentIndex)
-    configureNavigation(isBookmark)
-    configureHighlight()
-  }
-  
+  // MARK: - Highlight
   private func updateHighlight(_ action: UIAction) {
     guard let currentIndex = currentIndex(),
           let currentSelection = pdfView.currentSelection else {
@@ -145,7 +193,6 @@ final class PDFDetailViewController: UIViewController {
     
     do {
       try viewModel.updateHighlight(textList: highlights, index: currentIndex)
-      configureHighlight()
     } catch {
       presentFailAlert(message: error.localizedDescription)
     }
@@ -153,16 +200,52 @@ final class PDFDetailViewController: UIViewController {
     pdfView.clearSelection()
   }
   
-  private func configureHighlight() {
+  // MARK: - Memo
+  private func showMemoView(_ action: UIAction) {
     guard let currentIndex = currentIndex() else {
       return
     }
     
+    let memo = memo
+    let memoViewController = DIContainer().makePDFMemoViewController(
+      text: memo,
+      index: currentIndex
+    )
+    memoViewController.delegate = self
+    
+    navigationController?.pushViewController(memoViewController, animated: true)
+  }
+}
+
+// MARK: - Configure UI Object
+extension PDFDetailViewController {
+  private func configurePDFView(pdfDocument: PDFDocument?) {
+    DispatchQueue.main.async {
+      self.pdfView.document = pdfDocument
+      self.updateCurrentPage()
+      self.configurePageLabel()
+    }
+  }
+  
+  private func configurePageLabel() {
+    if let currentPage: PDFPage = pdfView.currentPage,
+       let pageIndex: Int = pdfView.document?.index(for: currentPage) {
+      
+      let pageNumberText = String(
+        format: NameSpace.pageNumberFormat,
+        pageIndex + 1,
+        pdfView.document?.pageCount ?? .zero
+      )
+      pageNumberView.configurePageNumber(pageNumberText)
+    }
+  }
+  
+  private func configureHighlight(_ highlights: [String]) {
     pdfView.currentPage?.annotations.forEach {
       pdfView.currentPage?.removeAnnotation($0)
     }
     
-    let selections = viewModel.highlight(at: currentIndex).compactMap {
+    let selections = highlights.compactMap {
       pdfView.document?.findString($0, withOptions: .caseInsensitive).first
     }
     
@@ -181,64 +264,6 @@ final class PDFDetailViewController: UIViewController {
       page.addAnnotation(highlight)
     }
   }
-  
-  private func showMemoView(_ action: UIAction) {
-    guard let currentIndex = currentIndex() else {
-      return
-    }
-    
-    let memo = viewModel.memo(at: currentIndex)
-    let memoViewController = DIContainer().makePDFMemoViewController(
-      text: memo,
-      index: currentIndex
-    )
-    memoViewController.delegate = self
-    
-    navigationController?.pushViewController(memoViewController, animated: true)
-  }
-  
-  private func currentIndex() -> Int? {
-    guard let currentPage = pdfView.currentPage,
-          let currentIndex = pdfView.document?.index(for: currentPage) else {
-      return nil
-    }
-    
-    return currentIndex
-  }
-}
-
-// MARK: - Data Binding
-extension PDFDetailViewController {
-  private func setupBindings() {
-    viewModel.pdfDocumentPublisher.sink { pdfDocument in
-      self.configurePDFView(pdfDocument: pdfDocument)
-    }.store(in: &cancellables)
-  }
-}
-
-// MARK: - Configure UI Object
-extension PDFDetailViewController {
-  private func configurePDFView(pdfDocument: PDFDocument?) {
-    DispatchQueue.main.async {
-      self.pdfView.document = pdfDocument
-      self.configurePageLabel()
-      self.checkBookmark()
-      self.configureHighlight()
-    }
-  }
-  
-  private func configurePageLabel() {
-    if let currentPage: PDFPage = pdfView.currentPage,
-       let pageIndex: Int = pdfView.document?.index(for: currentPage) {
-      
-      let pageNumberText = String(
-        format: NameSpace.pageNumberFormat,
-        pageIndex + 1,
-        pdfView.document?.pageCount ?? .zero
-      )
-      pageNumberView.configurePageNumber(pageNumberText)
-    }
-  }
 }
 
 // MARK: - PDFMemoViewController Delegate
@@ -249,7 +274,7 @@ extension PDFDetailViewController: PDFMemoViewControllerDelegate {
     noteIndex: Int
   ) {
     do {
-      try viewModel.storeMemo(text: text, index: noteIndex)
+      try viewModel.updateMemo(text: text, index: noteIndex)
     } catch {
       presentFailAlert(message: error.localizedDescription)
     }
