@@ -21,7 +21,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
       migrationBlock: { migration, oldSchemaVersion in
         if oldSchemaVersion < 2 {
           migration.enumerateObjects(ofType: PDFDTO.className()) { oldObject, newObject in
-            newObject!["highlight"] = List<IntStringPair>()
+            newObject![NameSpace.highlight] = List<IntStringPair>()
           }
         }
       }

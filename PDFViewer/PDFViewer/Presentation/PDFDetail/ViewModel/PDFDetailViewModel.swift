@@ -107,7 +107,7 @@ extension DefaultPDFDetailViewModel {
     var newPDFData = pdfData
     var highlights = newPDFData
       .highlight[index]?
-      .split(separator: "\n")
+      .split(separator: Character.enter)
       .map { String($0) } ?? []
     
     textList.forEach {
@@ -119,7 +119,7 @@ extension DefaultPDFDetailViewModel {
       }
     }
     
-    newPDFData.highlight[index] = highlights.joined(separator: "\n")
+    newPDFData.highlight[index] = highlights.joined(separator: String.enter)
     
     try repository.updatePDFData(pdfData: newPDFData)
     loadPDFData()
@@ -128,7 +128,7 @@ extension DefaultPDFDetailViewModel {
   func highlight(at index: Int) -> [String] {
     return pdfData?
       .highlight[index]?
-      .split(separator: "\n")
+      .split(separator: Character.enter)
       .map { String($0) } ?? []
   }
   
@@ -145,6 +145,6 @@ extension DefaultPDFDetailViewModel {
   }
   
   func memo(at index: Int) -> String {
-    return pdfData?.memo[index] ?? ""
+    return pdfData?.memo[index] ?? String.empty
   }
 }

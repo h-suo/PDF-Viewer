@@ -74,7 +74,7 @@ extension AlertManager {
   
   func setTextField(_ placeholder: String?) -> AlertManager {
     var newPlaceholders = placeholders
-    newPlaceholders.append(placeholder ?? "")
+    newPlaceholders.append(placeholder ?? String.empty)
     
     return AlertManager(
       title: title,
@@ -103,17 +103,5 @@ extension AlertManager {
     }
     
     return alert
-  }
-}
-
-extension AlertManager {
-  static func failAlert(_ message: String) -> AlertManager {
-    let okAction = UIAlertAction(title: "Yes", style: .cancel)
-    
-    return AlertManager(
-      title: "Failure",
-      message: message,
-      actions: [okAction]
-    )
   }
 }

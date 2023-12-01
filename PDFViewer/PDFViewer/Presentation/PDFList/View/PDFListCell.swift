@@ -26,7 +26,7 @@ final class PDFListCell: UICollectionViewListCell {
   
   private let docImageView: UIImageView = {
     let imageView = UIImageView()
-    imageView.image = UIImage(systemName: "doc")
+    imageView.image = UIImage(systemName: NameSpace.doc)
     imageView.tintColor = .systemGray
     imageView.contentMode = .scaleAspectFit
     

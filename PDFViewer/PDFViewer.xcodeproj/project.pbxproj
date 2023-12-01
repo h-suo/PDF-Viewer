@@ -29,6 +29,9 @@
 		45CD1B832ADD55F4002DEC57 /* PDFDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CD1B822ADD55F4002DEC57 /* PDFDTO.swift */; };
 		45CD1B852ADD5679002DEC57 /* RepositoryError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CD1B842ADD5679002DEC57 /* RepositoryError.swift */; };
 		45CD1B892ADD576F002DEC57 /* RealmTranslater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CD1B882ADD576F002DEC57 /* RealmTranslater.swift */; };
+		45FE396E2B19B0890056777E /* NameSpace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FE396D2B19B0890056777E /* NameSpace.swift */; };
+		45FE39702B19BCFC0056777E /* Character+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FE396F2B19BCFC0056777E /* Character+.swift */; };
+		45FE39722B19BD050056777E /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FE39712B19BD050056777E /* String+.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,6 +59,9 @@
 		45CD1B822ADD55F4002DEC57 /* PDFDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFDTO.swift; sourceTree = "<group>"; };
 		45CD1B842ADD5679002DEC57 /* RepositoryError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryError.swift; sourceTree = "<group>"; };
 		45CD1B882ADD576F002DEC57 /* RealmTranslater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmTranslater.swift; sourceTree = "<group>"; };
+		45FE396D2B19B0890056777E /* NameSpace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameSpace.swift; sourceTree = "<group>"; };
+		45FE396F2B19BCFC0056777E /* Character+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Character+.swift"; sourceTree = "<group>"; };
+		45FE39712B19BD050056777E /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -222,6 +228,7 @@
 			children = (
 				45ADA9022B0C7A2700626473 /* Manager */,
 				4582B8A82AD6889100AF5EF4 /* Extensions */,
+				45FE396D2B19B0890056777E /* NameSpace.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -231,6 +238,8 @@
 			children = (
 				4582B8A92AD688A400AF5EF4 /* UIViewController+.swift */,
 				45B70FAD2ADCBF0100441C4C /* UITextView+.swift */,
+				45FE396F2B19BCFC0056777E /* Character+.swift */,
+				45FE39712B19BD050056777E /* String+.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -379,7 +388,9 @@
 			files = (
 				4582B8992AD56D6E00AF5EF4 /* PDFData.swift in Sources */,
 				45ADA9042B0C7A3D00626473 /* AlertManager.swift in Sources */,
+				45FE39702B19BCFC0056777E /* Character+.swift in Sources */,
 				45CD1B832ADD55F4002DEC57 /* PDFDTO.swift in Sources */,
+				45FE396E2B19B0890056777E /* NameSpace.swift in Sources */,
 				4582B8A32AD639A200AF5EF4 /* DIContainer.swift in Sources */,
 				4582B8952AD53A6400AF5EF4 /* PDFDetailViewController.swift in Sources */,
 				4582B8AC2AD68F5300AF5EF4 /* PDFDetailViewModel.swift in Sources */,
@@ -393,6 +404,7 @@
 				4513EDB42AD3C52100939A6E /* AppDelegate.swift in Sources */,
 				4513EDD32AD3EC1300939A6E /* PDFListCell.swift in Sources */,
 				45CD1B852ADD5679002DEC57 /* RepositoryError.swift in Sources */,
+				45FE39722B19BD050056777E /* String+.swift in Sources */,
 				4513EDB62AD3C52100939A6E /* SceneDelegate.swift in Sources */,
 				454AFEA62B1468B6002F917F /* PageNumberView.swift in Sources */,
 				45ADA92E2B0CD99900626473 /* Repository.swift in Sources */,

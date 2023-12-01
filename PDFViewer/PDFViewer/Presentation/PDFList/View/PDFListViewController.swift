@@ -40,21 +40,21 @@ final class PDFListViewController: UIViewController {
   }
   
   @objc private func tapAddButton() {
-    let cancelAction = UIAlertAction(title: "cancel", style: .cancel)
+    let cancelAction = UIAlertAction(title: NameSpace.cancel, style: .cancel)
     let alert = AlertManager()
-      .setTitle("Load PDF")
-      .setMessage("Enter the URL to load the PDF.")
+      .setTitle(NameSpace.loadPDF)
+      .setMessage(NameSpace.enterPDFURL)
       .setStyle(.alert)
       .setAction(cancelAction)
-      .setTextField("Enter the Title")
-      .setTextField("Enter the URL")
+      .setTextField(NameSpace.enterTitle)
+      .setTextField(NameSpace.enterURL)
       .buildAlert()
     
-    let addAction = UIAlertAction(title: "Add", style: .default) { [weak self] _ in
+    let addAction = UIAlertAction(title: NameSpace.add, style: .default) { [weak self] _ in
       guard let self,
             let title = alert.textFields?[0].text,
             let urlString = alert.textFields?[1].text else {
-        self?.presentFailAlert(message: "Please enter Title and URL.")
+        self?.presentFailAlert(message: NameSpace.enterTitleAndURL)
         return
       }
       
@@ -159,7 +159,7 @@ extension PDFListViewController: UICollectionViewDelegate {
     
     let deleteAction = UIContextualAction(
       style: .destructive,
-      title: "delete",
+      title: NameSpace.delete,
       handler: { [weak self] _, _, completion in
         guard let self else {
           return
@@ -208,7 +208,7 @@ extension PDFListViewController {
     )
     
     navigationItem.rightBarButtonItem = addButton
-    navigationItem.title = "PDF Viewer"
+    navigationItem.title = NameSpace.pdfViewer
   }
   
   private func configureView() {

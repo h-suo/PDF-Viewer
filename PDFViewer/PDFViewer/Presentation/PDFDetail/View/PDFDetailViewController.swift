@@ -95,24 +95,28 @@ final class PDFDetailViewController: UIViewController {
       return
     }
     
-    let cancelAction = UIAlertAction(title: "cancel", style: .cancel)
+    let cancelAction = UIAlertAction(title: NameSpace.cancel, style: .cancel)
     let alert = AlertManager()
-      .setTitle("bookmark")
+      .setTitle(NameSpace.bookmark)
       .setStyle(.actionSheet)
       .setAction(cancelAction)
       .buildAlert()
     
     bookmarkIndexs.forEach { index in
-      let action = UIAlertAction(title: "page \(index + 1)", style: .default) { _ in
-        guard let page = self.pdfView.document?.page(at: index) else {
-          return
+      let action = UIAlertAction(
+        title: String(format: NameSpace.pageTitleFormat, index + 1),
+        style: .default,
+        handler: { _ in
+          guard let page = self.pdfView.document?.page(at: index) else {
+            return
+          }
+          
+          self.pdfView.go(to: page)
+          self.configurePageLabel()
+          self.checkBookmark()
+          self.configureHighlight()
         }
-        
-        self.pdfView.go(to: page)
-        self.configurePageLabel()
-        self.checkBookmark()
-        self.configureHighlight()
-      }
+      )
       
       alert.addAction(action)
     }
@@ -227,7 +231,11 @@ extension PDFDetailViewController {
     if let currentPage: PDFPage = pdfView.currentPage,
        let pageIndex: Int = pdfView.document?.index(for: currentPage) {
       
-      let pageNumberText = "\(pageIndex + 1) / \(pdfView.document?.pageCount ?? .zero)"
+      let pageNumberText = String(
+        format: NameSpace.pageNumberFormat,
+        pageIndex + 1,
+        pdfView.document?.pageCount ?? .zero
+      )
       pageNumberView.configurePageNumber(pageNumberText)
     }
   }
@@ -260,23 +268,23 @@ extension PDFDetailViewController {
   private func configureActions(_ isBookmark: Bool) -> [UIAction] {
     return [
       UIAction(
-        title: "bookmark",
-        image: UIImage(systemName: isBookmark ? "bookmark.fill" : "bookmark"),
+        title: NameSpace.bookmark,
+        image: UIImage(systemName: isBookmark ? NameSpace.bookmarkFill : NameSpace.bookmark),
         handler: updateBookmark
       ),
       UIAction(
-        title: "move bookmark",
-        image: UIImage(systemName: "book"),
+        title: NameSpace.moveBookmark,
+        image: UIImage(systemName: NameSpace.book),
         handler: moveBookmark
       ),
       UIAction(
-        title: "highlight",
-        image: UIImage(systemName: "highlighter"),
+        title: NameSpace.highlight,
+        image: UIImage(systemName: NameSpace.highlighter),
         handler: updateHighlight
       ),
       UIAction(
-        title: "memo",
-        image: UIImage(systemName: "note"),
+        title: NameSpace.memo,
+        image: UIImage(systemName: NameSpace.note),
         handler: showMemoView
       )
     ]
@@ -284,7 +292,7 @@ extension PDFDetailViewController {
   
   private func configureNavigation(_ isBookmark: Bool) {
     let moreButton = UIBarButtonItem(
-      image: UIImage(systemName: "ellipsis"),
+      image: UIImage(systemName: NameSpace.ellipsis),
       style: .plain,
       target: self,
       action: nil
@@ -292,13 +300,13 @@ extension PDFDetailViewController {
     moreButton.menu = UIMenu(children: configureActions(isBookmark))
     
     navigationItem.rightBarButtonItem = moreButton
-    navigationItem.title = "PDF Detail"
+    navigationItem.title = NameSpace.pdfDetail
   }
   
   private func configureToolBar() {
     toolbarItems = [
       UIBarButtonItem(
-        image: UIImage(systemName: "chevron.left"),
+        image: UIImage(systemName: NameSpace.chevronLeft),
         style: .plain, target: self,
         action: #selector(tapBackButton)
       ),
@@ -308,7 +316,7 @@ extension PDFDetailViewController {
         action: nil
       ),
       UIBarButtonItem(
-        image: UIImage(systemName: "chevron.right"),
+        image: UIImage(systemName: NameSpace.chevronRight),
         style: .plain,
         target: self,
         action: #selector(tapNextButton)

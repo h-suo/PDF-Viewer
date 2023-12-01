@@ -85,7 +85,7 @@ extension PDFMemoViewController {
     )
     
     navigationItem.rightBarButtonItem = doneAction
-    navigationItem.title = "Page\(index + 1) Memo"
+    navigationItem.title = String(format: NameSpace.pageMemoTitleFormat, index + 1)
   }
   
   private func configureView() {
