@@ -46,7 +46,7 @@ extension DefaultPDFListViewModel {
   }
 }
 
-// MARK: - INPUT View event methods
+// MARK: - INPUT
 extension DefaultPDFListViewModel {
   func storePDF(title: String, urlString: String) throws {
     if title == String.empty || urlString == String.empty {

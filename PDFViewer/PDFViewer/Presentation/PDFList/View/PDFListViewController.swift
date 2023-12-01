@@ -14,12 +14,13 @@ final class PDFListViewController: UIViewController {
   private var collectionView: UICollectionView?
   private var dataSource: UICollectionViewDiffableDataSource<Section, PDFData>?
   
-  private var cancellables: [AnyCancellable] = []
   private let viewModel: PDFListViewModel
+  private var cancellables: [AnyCancellable]
   
   // MARK: - Life Cycle
   init(viewModel: PDFListViewModel) {
     self.viewModel = viewModel
+    self.cancellables = []
     
     super.init(nibName: nil, bundle: nil)
   }
@@ -28,17 +29,38 @@ final class PDFListViewController: UIViewController {
     fatalError("init(coder:) has not been implemented")
   }
   
-  // MARK: - View Event
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    configureCollectionView()
+    configureUIObject()
     configureDataSource()
-    configureSearchController()
     configureUI()
-    setupBindings()
+    bindingPDFData()
+    bindingSearchPDFData()
+  }
+}
+
+// MARK: - Data Binding
+extension PDFListViewController {
+  private func bindingPDFData() {
+    viewModel.pdfDatasPublisher.sink { pdfDatas in
+      self.loadCollectionView(pdfDatas)
+    }.store(in: &cancellables)
   }
   
+  private func bindingSearchPDFData() {
+    viewModel.searchPDFDatasPublisher.sink { pdfDatas in
+      if !pdfDatas.isEmpty {
+        self.loadCollectionView(pdfDatas)
+      }
+    }.store(in: &cancellables)
+  }
+}
+
+// MARK: - View Event
+extension PDFListViewController {
+  
+  // MARK: - Add PDF
   @objc private func tapAddButton() {
     let cancelAction = UIAlertAction(title: NameSpace.cancel, style: .cancel)
     let alert = AlertManager()
@@ -71,17 +93,14 @@ final class PDFListViewController: UIViewController {
   }
 }
 
-// MARK: - Data Binding
-extension PDFListViewController {
-  private func setupBindings() {
-    viewModel.pdfDatasPublisher.sink { pdfDatas in
-      self.loadCollectionView(pdfDatas)
-    }.store(in: &cancellables)
-  }
-}
-
 // MARK: - Configure UI Object
 extension PDFListViewController {
+  
+  private func configureUIObject() {
+    configureCollectionView()
+    configureSearchController()
+  }
+  
   private func makeCollectionViewLayout() -> UICollectionViewCompositionalLayout {
     var configuration = UICollectionLayoutListConfiguration(appearance: .plain)
     configuration.trailingSwipeActionsConfigurationProvider = makeSwipeActions
@@ -178,6 +197,7 @@ extension PDFListViewController: UICollectionViewDelegate {
   }
 }
 
+// MARK: - SearchResults Updating
 extension PDFListViewController: UISearchResultsUpdating {
   func updateSearchResults(for searchController: UISearchController) {
     guard let text = searchController.searchBar.text?.lowercased() else {
@@ -185,10 +205,6 @@ extension PDFListViewController: UISearchResultsUpdating {
     }
     
     viewModel.searchPDF(text)
-    
-    viewModel.searchPDFDatasPublisher.sink { pdfDatas in
-      self.loadCollectionView(pdfDatas)
-    }.store(in: &cancellables)
   }
 }
 
