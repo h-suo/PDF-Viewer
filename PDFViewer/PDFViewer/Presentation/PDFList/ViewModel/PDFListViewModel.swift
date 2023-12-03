@@ -42,7 +42,7 @@ final class DefaultPDFListViewModel: PDFListViewModel {
 // MARK: - Load Data
 extension DefaultPDFListViewModel {
   private func loadPDFData() {
-    pdfDatas = repository.readAllPDFDatas()
+    pdfDatas = repository.readPDFDatas()
   }
 }
 

@@ -63,7 +63,7 @@ final class DefaultPDFDetailViewModel: PDFDetailViewModel {
 // MARK: - Load Data
 extension DefaultPDFDetailViewModel {
   private func loadPDFData() {
-    let pdfDatas = repository.readAllPDFDatas()
+    let pdfDatas = repository.readPDFDatas()
     let url = pdfDatas[index].url
     pdfData = pdfDatas[index]
     

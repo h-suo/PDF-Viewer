@@ -22,21 +22,13 @@ final class RealmRepository: Repository {
   }
   
   // MARK: - CRUD Function
-  func readAllPDFDatas() -> [PDFData] {
+  func readPDFDatas() -> [PDFData] {
     let objects = realm.objects(PDFDTO.self)
     let pdfDTOs = Array(objects)
     
     return pdfDTOs.compactMap {
       RealmTranslater.convertToPDFData($0)
     }
-  }
-  
-  func readPDFData(with id: UUID) -> PDFData? {
-    guard let pdfDTO = realm.object(ofType: PDFDTO.self, forPrimaryKey: id) else {
-      return nil
-    }
-    
-    return RealmTranslater.convertToPDFData(pdfDTO)
   }
   
   func createPDFData(title: String, url: URL) throws {
