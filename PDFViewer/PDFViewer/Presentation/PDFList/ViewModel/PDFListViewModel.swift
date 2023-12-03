@@ -62,6 +62,10 @@ extension DefaultPDFListViewModel {
   }
   
   func deletePDF(at index: Int) throws {
+    guard (0..<pdfDatas.count).contains(index) else {
+      throw RepositoryError.deletionFailed
+    }
+    
     let deletePDFData = pdfDatas[index]
     
     try repository.deletePDFData(pdfData: deletePDFData)
