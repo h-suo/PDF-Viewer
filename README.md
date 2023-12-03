@@ -148,18 +148,18 @@ URL로 PDF 파일을 추가하여 볼 수 있습니다! <br>
 
 기존에 사용했던 `MVC` 패턴과 달리 `MVVM`은 `View`와 `Model`의 분리가 가능하고 `testable` 한 구현이 가능하다고 생각하여 `MVVM` 패턴을 사용했습니다.
 
-> Application : 앱의 생명주기를 관리하는 `AppDelegate`, `SceneDelegate`
-> └ DIContainer : 의존성 주입을 관리하는 객체
-> Domain
-> └ Entity : 앱에서 사용하는 데이터 모델 
-> Presentation
-> ├ ViewModel : `View`에 수신된 이벤트 관리 및 사용자에게 보여줄 데이터를 관리하는 객체
-> └ View : `UI` 관리 및 사용자 이벤트 수신을 담당하는 객체
-> Data
-> ├ DTO : 로컬 `DB`에서 사용하기 위한 데이터 모델
-> ├ Repository : 데이터를 저장 및 수정합니다.
-> └ Translater : `DTO`를 `Entity`로 변환하는 객체
-> Util : 프로젝트에 필요한 기능을 제공하는 `Util` 객체와 `Extension` 코드
+> Application : 앱의 생명주기를 관리하는 `AppDelegate`, `SceneDelegate` <br>
+> └ DIContainer : 의존성 주입을 관리하는 객체 <br>
+> Domain  <br>
+> └ Entity : 앱에서 사용하는 데이터 모델 <br>
+> Presentation  <br>
+> ├ ViewModel : `View`에 수신된 이벤트 관리 및 사용자에게 보여줄 데이터를 관리하는 객체 <br>
+> └ View : `UI` 관리 및 사용자 이벤트 수신을 담당하는 객체 <br>
+> Data <br>
+> ├ DTO : 로컬 `DB`에서 사용하기 위한 데이터 모델 <br>
+> ├ Repository : 데이터를 저장 및 수정합니다. <br>
+> └ Translater : `DTO`를 `Entity`로 변환하는 객체 <br>
+> Util : 프로젝트에 필요한 기능을 제공하는 `Util` 객체와 `Extension` 코드 <br>
 > Resource : 프로젝트에 필요한 자원
 
 <br>
