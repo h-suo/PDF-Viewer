@@ -14,6 +14,10 @@
 		4513EDC02AD3C52200939A6E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4513EDBE2AD3C52200939A6E /* LaunchScreen.storyboard */; };
 		4513EDD32AD3EC1300939A6E /* PDFListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4513EDD22AD3EC1300939A6E /* PDFListCell.swift */; };
 		454AFEA62B1468B6002F917F /* PageNumberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454AFEA52B1468B6002F917F /* PageNumberView.swift */; };
+		455095232B1C6A2000DF8E19 /* PDFListViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455095222B1C6A2000DF8E19 /* PDFListViewModelTests.swift */; };
+		4550952C2B1C6B0200DF8E19 /* MockRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4550952B2B1C6B0200DF8E19 /* MockRepository.swift */; };
+		4550952F2B1C729400DF8E19 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 4550952E2B1C729400DF8E19 /* RealmSwift */; };
+		455095322B1C894000DF8E19 /* PDFDetailViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455095312B1C894000DF8E19 /* PDFDetailViewModelTests.swift */; };
 		4582B8952AD53A6400AF5EF4 /* PDFDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4582B8942AD53A6400AF5EF4 /* PDFDetailViewController.swift */; };
 		4582B8992AD56D6E00AF5EF4 /* PDFData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4582B8982AD56D6E00AF5EF4 /* PDFData.swift */; };
 		4582B8A02AD5707C00AF5EF4 /* PDFListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4582B89F2AD5707C00AF5EF4 /* PDFListViewModel.swift */; };
@@ -34,6 +38,16 @@
 		45FE39722B19BD050056777E /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FE39712B19BD050056777E /* String+.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		455095242B1C6A2000DF8E19 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4513EDA82AD3C52100939A6E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4513EDAF2AD3C52100939A6E;
+			remoteInfo = PDFViewer;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		4513EDB02AD3C52100939A6E /* PDFViewer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PDFViewer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4513EDB32AD3C52100939A6E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -45,6 +59,10 @@
 		4513EDC82AD3C90600939A6E /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		4513EDD22AD3EC1300939A6E /* PDFListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFListCell.swift; sourceTree = "<group>"; };
 		454AFEA52B1468B6002F917F /* PageNumberView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageNumberView.swift; sourceTree = "<group>"; };
+		455095202B1C6A2000DF8E19 /* PDFViewerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PDFViewerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		455095222B1C6A2000DF8E19 /* PDFListViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFListViewModelTests.swift; sourceTree = "<group>"; };
+		4550952B2B1C6B0200DF8E19 /* MockRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRepository.swift; sourceTree = "<group>"; };
+		455095312B1C894000DF8E19 /* PDFDetailViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFDetailViewModelTests.swift; sourceTree = "<group>"; };
 		4582B8942AD53A6400AF5EF4 /* PDFDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFDetailViewController.swift; sourceTree = "<group>"; };
 		4582B8982AD56D6E00AF5EF4 /* PDFData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFData.swift; sourceTree = "<group>"; };
 		4582B89F2AD5707C00AF5EF4 /* PDFListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFListViewModel.swift; sourceTree = "<group>"; };
@@ -73,6 +91,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		4550951D2B1C6A2000DF8E19 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4550952F2B1C729400DF8E19 /* RealmSwift in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -81,7 +107,9 @@
 			children = (
 				4513EDC82AD3C90600939A6E /* .swiftlint.yml */,
 				4513EDB22AD3C52100939A6E /* PDFViewer */,
+				455095212B1C6A2000DF8E19 /* PDFViewerTests */,
 				4513EDB12AD3C52100939A6E /* Products */,
+				4550952D2B1C729400DF8E19 /* Frameworks */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -91,6 +119,7 @@
 			isa = PBXGroup;
 			children = (
 				4513EDB02AD3C52100939A6E /* PDFViewer.app */,
+				455095202B1C6A2000DF8E19 /* PDFViewerTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -154,6 +183,47 @@
 				4513EDD22AD3EC1300939A6E /* PDFListCell.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		455095212B1C6A2000DF8E19 /* PDFViewerTests */ = {
+			isa = PBXGroup;
+			children = (
+				455095302B1C892100DF8E19 /* ViewModel */,
+				455095292B1C6A5D00DF8E19 /* Test Double */,
+			);
+			path = PDFViewerTests;
+			sourceTree = "<group>";
+		};
+		455095292B1C6A5D00DF8E19 /* Test Double */ = {
+			isa = PBXGroup;
+			children = (
+				4550952A2B1C6AED00DF8E19 /* Mock */,
+			);
+			path = "Test Double";
+			sourceTree = "<group>";
+		};
+		4550952A2B1C6AED00DF8E19 /* Mock */ = {
+			isa = PBXGroup;
+			children = (
+				4550952B2B1C6B0200DF8E19 /* MockRepository.swift */,
+			);
+			path = Mock;
+			sourceTree = "<group>";
+		};
+		4550952D2B1C729400DF8E19 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		455095302B1C892100DF8E19 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				455095222B1C6A2000DF8E19 /* PDFListViewModelTests.swift */,
+				455095312B1C894000DF8E19 /* PDFDetailViewModelTests.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		4582B8922AD53A3D00AF5EF4 /* PDFDetail */ = {
@@ -311,6 +381,27 @@
 			productReference = 4513EDB02AD3C52100939A6E /* PDFViewer.app */;
 			productType = "com.apple.product-type.application";
 		};
+		4550951F2B1C6A2000DF8E19 /* PDFViewerTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 455095282B1C6A2000DF8E19 /* Build configuration list for PBXNativeTarget "PDFViewerTests" */;
+			buildPhases = (
+				4550951C2B1C6A2000DF8E19 /* Sources */,
+				4550951D2B1C6A2000DF8E19 /* Frameworks */,
+				4550951E2B1C6A2000DF8E19 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				455095252B1C6A2000DF8E19 /* PBXTargetDependency */,
+			);
+			name = PDFViewerTests;
+			packageProductDependencies = (
+				4550952E2B1C729400DF8E19 /* RealmSwift */,
+			);
+			productName = PDFViewerTests;
+			productReference = 455095202B1C6A2000DF8E19 /* PDFViewerTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -323,6 +414,10 @@
 				TargetAttributes = {
 					4513EDAF2AD3C52100939A6E = {
 						CreatedOnToolsVersion = 14.3.1;
+					};
+					4550951F2B1C6A2000DF8E19 = {
+						CreatedOnToolsVersion = 14.3.1;
+						TestTargetID = 4513EDAF2AD3C52100939A6E;
 					};
 				};
 			};
@@ -343,6 +438,7 @@
 			projectRoot = "";
 			targets = (
 				4513EDAF2AD3C52100939A6E /* PDFViewer */,
+				4550951F2B1C6A2000DF8E19 /* PDFViewerTests */,
 			);
 		};
 /* End PBXProject section */
@@ -354,6 +450,13 @@
 			files = (
 				4513EDC02AD3C52200939A6E /* LaunchScreen.storyboard in Resources */,
 				4513EDBD2AD3C52200939A6E /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4550951E2B1C6A2000DF8E19 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -411,7 +514,25 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		4550951C2B1C6A2000DF8E19 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				455095322B1C894000DF8E19 /* PDFDetailViewModelTests.swift in Sources */,
+				455095232B1C6A2000DF8E19 /* PDFListViewModelTests.swift in Sources */,
+				4550952C2B1C6B0200DF8E19 /* MockRepository.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		455095252B1C6A2000DF8E19 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4513EDAF2AD3C52100939A6E /* PDFViewer */;
+			targetProxy = 455095242B1C6A2000DF8E19 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		4513EDBE2AD3C52200939A6E /* LaunchScreen.storyboard */ = {
@@ -599,6 +720,48 @@
 			};
 			name = Release;
 		};
+		455095262B1C6A2000DF8E19 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hyeonsu.PDFViewerTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PDFViewer.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/PDFViewer";
+			};
+			name = Debug;
+		};
+		455095272B1C6A2000DF8E19 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hyeonsu.PDFViewerTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PDFViewer.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/PDFViewer";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -620,6 +783,15 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		455095282B1C6A2000DF8E19 /* Build configuration list for PBXNativeTarget "PDFViewerTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				455095262B1C6A2000DF8E19 /* Debug */,
+				455095272B1C6A2000DF8E19 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
@@ -634,6 +806,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		4550952E2B1C729400DF8E19 /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 45CD1B7B2ADD25AE002DEC57 /* XCRemoteSwiftPackageReference "realm-cocoa" */;
+			productName = RealmSwift;
+		};
 		45CD1B7C2ADD25AE002DEC57 /* RealmSwift */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 45CD1B7B2ADD25AE002DEC57 /* XCRemoteSwiftPackageReference "realm-cocoa" */;
