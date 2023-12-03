@@ -132,8 +132,8 @@
 				4513EDCA2AD3D97700939A6E /* Presentation */,
 				45CD1B7E2ADD43E9002DEC57 /* Data */,
 				4582B8A42AD66CE400AF5EF4 /* Error */,
-				4582B8A72AD6888000AF5EF4 /* Utils */,
-				4513EDCB2AD3D99000939A6E /* Resources */,
+				4582B8A72AD6888000AF5EF4 /* Util */,
+				4513EDCB2AD3D99000939A6E /* Resource */,
 			);
 			path = PDFViewer;
 			sourceTree = "<group>";
@@ -157,14 +157,14 @@
 			path = Presentation;
 			sourceTree = "<group>";
 		};
-		4513EDCB2AD3D99000939A6E /* Resources */ = {
+		4513EDCB2AD3D99000939A6E /* Resource */ = {
 			isa = PBXGroup;
 			children = (
 				4513EDBC2AD3C52200939A6E /* Assets.xcassets */,
 				4513EDBE2AD3C52200939A6E /* LaunchScreen.storyboard */,
 				4513EDC12AD3C52200939A6E /* Info.plist */,
 			);
-			path = Resources;
+			path = Resource;
 			sourceTree = "<group>";
 		};
 		4513EDCC2AD3DAF300939A6E /* PDFList */ = {
@@ -293,14 +293,14 @@
 			path = Error;
 			sourceTree = "<group>";
 		};
-		4582B8A72AD6888000AF5EF4 /* Utils */ = {
+		4582B8A72AD6888000AF5EF4 /* Util */ = {
 			isa = PBXGroup;
 			children = (
 				45ADA9022B0C7A2700626473 /* Manager */,
 				4582B8A82AD6889100AF5EF4 /* Extensions */,
 				45FE396D2B19B0890056777E /* NameSpace.swift */,
 			);
-			path = Utils;
+			path = Util;
 			sourceTree = "<group>";
 		};
 		4582B8A82AD6889100AF5EF4 /* Extensions */ = {
@@ -327,18 +327,18 @@
 			children = (
 				45CD1B862ADD572D002DEC57 /* DTO */,
 				45CD1B872ADD573E002DEC57 /* Translater */,
-				45CD1B7F2ADD443D002DEC57 /* Repositories */,
+				45CD1B7F2ADD443D002DEC57 /* Repository */,
 			);
 			path = Data;
 			sourceTree = "<group>";
 		};
-		45CD1B7F2ADD443D002DEC57 /* Repositories */ = {
+		45CD1B7F2ADD443D002DEC57 /* Repository */ = {
 			isa = PBXGroup;
 			children = (
 				45ADA92D2B0CD99900626473 /* Repository.swift */,
 				45CD1B802ADD4458002DEC57 /* RealmRepository.swift */,
 			);
-			path = Repositories;
+			path = Repository;
 			sourceTree = "<group>";
 		};
 		45CD1B862ADD572D002DEC57 /* DTO */ = {
